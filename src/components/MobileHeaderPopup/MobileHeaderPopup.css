@@ -106,3 +106,15 @@
   display: flex;
   justify-content: center;
 }
+
+.header-navigation__button-icon {
+  width: 17px;
+  height: 16px;
+  margin: 0 0 0 10px;
+}
+
+
+.header-navigation__button-icon_theme_black {
+  background: url('./../../images/signout-icon2.svg');
+  background-size: 17px 16px;
+}

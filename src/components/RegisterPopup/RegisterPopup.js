@@ -7,25 +7,73 @@ const RegisterPopup = props => {
     isOpen,
     onClose,
     onChangePopup,
+    onRegister,
+    error,
+    values,
+    isValid,
+    handleChange,
+    isLoading,
+    errorFormText,
   } = props;
+
+  // колбек сабмита формы
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onRegister(values.email, values.password, values.name);
+  }
+
+  // отключение кнопки
+  const submitButton = `${
+    isValid ? 'popup__button' : 'popup__button popup__button_disabled'
+  }`;
 
   return (
     <PopupWithForm
       isOpen={isOpen}
       onClose={onClose}
+      onSubmit={handleSubmit}
     >
       <p className="popup__title">Вход</p>
       <span className="popup__input-text">Email</span>
-      <input id="email-input" type="email" className="popup__input" placeholder="Введите почту" required minlength="5" maxlength="30" />
-      <span id="email-input-error" className="popup__input_error_active">Ошибка</span>
+      <input
+        type="email"
+        name="email"
+        className="popup__input"
+        placeholder="Введите почту"
+        required
+        minLength="5"
+        maxLength="30"
+        value={values.email || ''} onChange={handleChange}
+      />
+      <span id="email-input-error" className="popup__input_error_active">{error.email || ''}</span>
       <span className="popup__input-text">Пароль</span>
-      <input id="password-input" type="text" className="popup__input" placeholder="Введите пароль" required minlength="5" maxlength="20" />
-      <span id="password-input-error" className="popup__input_error_active">Ошибка</span>
+      <input
+        type="password"
+        name="password"
+        className="popup__input"
+        placeholder="Введите пароль"
+        required
+        minLength="5"
+        maxLength="20"
+        onChange={handleChange}
+        value={values.password || ''}
+      />
+      <span id="password-input-error" className="popup__input_error_active">{error.password}</span>
       <span className="popup__input-text">Имя</span>
-      <input id="name-input" type="text" className="popup__input" placeholder="Введите своё имя" required minlength="5" maxlength="20" />
-      <span id="name-input-error" className="popup__input_error_active">Ошибка</span>
-      <span id="form-input-error" className="popup__form_error_active">Ошибка</span>
-      <button className="popup__button" type="submit">Зарегистрироваться</button>
+      <input
+        type="text"
+        name="name"
+        className="popup__input"
+        placeholder="Введите своё имя"
+        required
+        minLength="5"
+        maxLength="20"
+        onChange={handleChange}
+        value={values.name || ''}
+      />
+      <span id="name-input-error" className="popup__input_error_active">{error.name}</span>
+      <span id="form-input-error" className="popup__form_error_active">{errorFormText}</span>
+      <button className={submitButton} type="submit">{isLoading ? 'Регистрация...' : 'Зарегистрироваться'}</button>
       <p className="popup__text">
         или&nbsp;
         <span className="popup__link" onClick={onChangePopup}>Войти</span>

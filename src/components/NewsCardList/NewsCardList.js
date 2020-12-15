@@ -1,79 +1,41 @@
 import React from 'react';
 import './NewsCardList.css'
 import NewsCard from './../NewsCard/NewsCard';
-import cardImage from './../../images/card.png';
-import { Route, Switch } from 'react-router-dom';
 
 const NewsCardList = props => {
+  const {
+    articlesToDisplay,
+    onArticleClick,
+    mySavedArticles,
+    loggedIn,
+    onAddArticlesToDisplay,
+  } = props;
 
   return (
-    <Switch>
-      <Route path="/main">
-        <section className="cards">
-          <div className="cards-container">
-            <h2 className="cards__title">Результаты поиска</h2>
-            <ul className="cards-wrapper">
+    <section className="cards">
+      <div className="cards-container">
+        <h2 className="cards__title">Результаты поиска</h2>
+        <ul className="cards-wrapper">
+          {
+            articlesToDisplay.map((article, index) =>
               <NewsCard
-                cardsImageLink={cardImage}
-                cardDate={'2 августа, 2019'}
-                cardTitle={'Национальное достояние – парки Национальное достояние – парки Национальное достояние – парки'}
-                cardSubtitle={'В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.'}
-                cardSource={'Лента.ру'}
+                article={article}
+                key={index}
+                cardsImageLink={article.urlToImage}
+                cardDate={article.publishedAt}
+                cardTitle={article.title}
+                cardSubtitle={article.description}
+                cardSource={article.source.name}
+                onArticleClick={onArticleClick}
+                mySavedArticles={mySavedArticles}
+                loggedIn={loggedIn}
               />
-              <NewsCard
-                cardsImageLink={cardImage}
-                cardDate={'2 августа, 2019'}
-                cardTitle={'Национальное достояние – парки Национальное достояние – парки Национальное достояние – парки'}
-                cardSubtitle={'В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.'}
-                cardSource={'Лента.ру'}
-              />
-              <NewsCard
-                cardsImageLink={cardImage}
-                cardDate={'2 августа, 2019'}
-                cardTitle={'Национальное достояние – парки Национальное достояние – парки Национальное достояние – парки'}
-                cardSubtitle={'В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.'}
-                cardSource={'Лента.ру'}
-              />
-            </ul>
-          </div>
-          <button className="cards__button">Показать еще</button>
-        </section>
-      </Route>
-
-      <Route path="/saved-news">
-        <section className="cards cards_type_saved">
-          <div className="cards-container">
-            <h2 className="cards__title">Результаты поиска</h2>
-            <ul className="cards-wrapper cards-wrapper_type_saved">
-              <NewsCard
-                cardsImageLink={cardImage}
-                cardSticker={'Природа'}
-                cardDate={'2 августа, 2019'}
-                cardTitle={'Национальное достояние – парки Национальное достояние – парки Национальное достояние – парки'}
-                cardSubtitle={'В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.'}
-                cardSource={'Лента.ру'}
-              />
-              <NewsCard
-                cardsImageLink={cardImage}
-                cardSticker={'Природа'}
-                cardDate={'2 августа, 2019'}
-                cardTitle={'Национальное достояние – парки Национальное достояние – парки Национальное достояние – парки'}
-                cardSubtitle={'В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.'}
-                cardSource={'Лента.ру'}
-              />
-              <NewsCard
-                cardsImageLink={cardImage}
-                cardSticker={'Природа'}
-                cardDate={'2 августа, 2019'}
-                cardTitle={'Национальное достояние – парки Национальное достояние – парки Национальное достояние – парки'}
-                cardSubtitle={'В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.'}
-                cardSource={'Лента.ру'}
-              />
-            </ul>
-          </div>
-        </section>
-      </Route>
-    </Switch>
+            )
+          }
+        </ul>
+      </div>
+      <button className="cards__button" onClick={onAddArticlesToDisplay}>Показать еще</button>
+    </section>
   )
 }
 
