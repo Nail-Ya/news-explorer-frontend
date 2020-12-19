@@ -103,8 +103,7 @@
 }
 
 .card__sticker {
-  padding: 0 15px 0 15px;
-  height: 40px;
+  padding: 8px 15px 8px 15px;
   font-family: 'Roboto-medium', 'Arial', 'Callibri', sans-serif;
   font-weight: 500;
   font-size: 10px;
@@ -113,16 +112,18 @@
   text-align: center;
   color: #000000;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
 }
 
 .card__sticker_type_dropdown {
+  height: 40px;
+  padding: 0 15px 0 15px;
+  display: flex;
+  align-items: center;
   font-size: 12px;
   line-height: 14px;
   position: absolute;
-  top: 13px;
+  top: 12px;
   right: 69px;
   opacity: 0;
   transition: opacity .7s linear;
@@ -132,8 +133,15 @@
   font-size: 14px;
   line-height: 24px;
   position: absolute;
-  top: 11px;
+  top: 10px;
   left: 24px;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.card__sticker_hidden {
+  display: none;
 }
 
 .card__button:hover ~ .card__sticker_type_dropdown {

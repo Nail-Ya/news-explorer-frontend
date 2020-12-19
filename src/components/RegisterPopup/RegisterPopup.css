@@ -20,7 +20,7 @@
   line-height: 15px;
   color: #2F71E5;
   display: block;
-  margin: 30px 0 0 36px;
+  margin: 10px 0 0 36px;
 }
 
 .popup__input-text:nth-of-type(1) {
@@ -29,7 +29,7 @@
 
 @media screen and (max-width: 479px){
   .popup__input-text {
-    margin: 30px 0 0 16px;
+    margin: 10px 0 0 16px;
   }
 
   .popup__input-text:nth-of-type(1) {
@@ -62,16 +62,11 @@
   font-size: 12px;
   line-height: 15px;
   color: #ff0000;
-  height: 23px;
   display: block;
   margin: 5px auto 0;
-  position: absolute;
-  top: auto;
-  left: 36px;
   width: 84%;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
+
 
 @media screen and (max-width: 479px){
   .popup__input {
@@ -89,15 +84,8 @@
   font-size: 12px;
   line-height: 15px;
   color: #ff0000;
-  height: 23px;
   display: block;
   margin: 17px auto 0;
-  position: absolute;
-  top: auto;
-  left: 50%;
-  transform: translate(-50%);
-  overflow: hidden;
-  text-overflow: ellipsis;
   width: 90%;
   text-align: center;
 }

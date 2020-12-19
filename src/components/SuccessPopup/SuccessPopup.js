@@ -6,6 +6,7 @@ const SuccessPopup = props => {
   const {
     isOpen,
     onClose,
+    onLogin,
   } = props;
 
   return (
@@ -14,7 +15,7 @@ const SuccessPopup = props => {
       onClose={onClose}
     >
       <p className="popup__title">Пользователь успешно зарегистрирован!</p>
-      <span className="popup__link popup__link_type_success">Войти</span>
+      <span className="popup__link popup__link_type_success" onClick={onLogin}>Войти</span>
     </PopupWithForm>
   )
 }
