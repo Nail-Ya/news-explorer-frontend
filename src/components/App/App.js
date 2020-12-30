@@ -346,16 +346,14 @@ function App() {
               loggedIn={loggedIn}
             />
           </Route>
-          <Route path="/saved-news">
-            <ProtectedRoute exact
-              path="/saved-news"
-              component={SavedNews}
-              handleLoginClick={handleLoginClick}
-              onArticleClick={handleArticleClick}
-              mySavedArticles={mySavedArticles}
-              loggedIn={loggedIn}
-            />
-          </Route>
+          <ProtectedRoute exact
+            path="/saved-news"
+            component={SavedNews}
+            handleLoginClick={handleLoginClick}
+            onArticleClick={handleArticleClick}
+            mySavedArticles={mySavedArticles}
+            loggedIn={loggedIn}
+          />
           <Redirect from='/' to='/main' />
         </Switch>
         <Footer />
