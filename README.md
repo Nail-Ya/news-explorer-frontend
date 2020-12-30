@@ -25,8 +25,8 @@ npm start # собрать проект
 
 
 ## Ссылка на репозиторий с backend частью (Node.js, Express, MongoDB)
-https://github.com/Nail-Ya/react-mesto-api-full
+https://github.com/Nail-Ya/news-explorer-api
 
 
 ## Ссылка на проект
-https://gss.students.nomoreparties.xyz/
+https://news-react-b0fd4.firebaseapp.com/main
