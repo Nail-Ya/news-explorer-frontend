@@ -113,6 +113,7 @@
 
 .popup__button:active {
   background: #2A65CC;
+  padding-top: 9px;
 }
 
 .popup__button_disabled {
