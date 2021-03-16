@@ -1,17 +1,23 @@
 import React from 'react';
-import './Header.css'
-import Navigation from './../Navigation/Navigation';
+import './Header.css';
+import Navigation from '../Navigation/Navigation';
 import { Link, useLocation } from 'react-router-dom';
 
-const Header = props => {
-  const {
-    onLogin,
-    onMobileHeader,
-    loggedIn,
-    onSignOut
-  } = props;
+export type Props = {
+  onLogin: () => void;
+  onMobileHeader: () => void;
+  loggedIn: boolean;
+  onSignOut: () => void;
+};
 
-  const path = useLocation().pathname;
+const Header: React.FC<Props> = ({
+  onLogin,
+  onMobileHeader,
+  loggedIn,
+  onSignOut
+}) => {
+
+  const path: string = useLocation().pathname;
 
   // значения className в зависимости от пути
   const headerClassName =
@@ -53,7 +59,7 @@ const Header = props => {
         <button className={headerBurgerMenuButtonClassName} onClick={onMobileHeader}></button>
       </div>
     </header>
-  )
+  );
 }
 
 export default Header;

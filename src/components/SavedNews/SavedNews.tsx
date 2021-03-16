@@ -1,16 +1,20 @@
 import React from 'react';
-import './SavedNews.css'
+import './SavedNews.css';
 import SavedNewsHeader from './../SavedNewsHeader/SavedNewsHeader';
 import NewsCard from './../NewsCard/NewsCard';
+import { Article, SavedArticle } from '../../utils/interfaces';
 
-const SavedNews = props => {
+export type Props = {
+  mySavedArticles: Array<Article | SavedArticle>;
+  onArticleClick: (article: Article | SavedArticle) => void;
+  loggedIn: boolean;
+};
 
-  const {
-    mySavedArticles,
-    onArticleClick,
-    loggedIn,
-  } = props;
-
+const SavedNews: React.FC<Props> = ({
+  mySavedArticles,
+  onArticleClick,
+  loggedIn,
+}) => {
   return (
     <main className="content">
       <SavedNewsHeader
@@ -23,7 +27,7 @@ const SavedNews = props => {
           <div className="cards-container">
             <ul className="cards-wrapper cards-wrapper_type_saved">
               {
-                mySavedArticles.map((article, index) =>
+                mySavedArticles.map((article: any, index: number) =>
                   <NewsCard
                     article={article}
                     key={index}
@@ -44,7 +48,7 @@ const SavedNews = props => {
         </section>
       }
     </main>
-  )
+  );
 }
 
 export default SavedNews;

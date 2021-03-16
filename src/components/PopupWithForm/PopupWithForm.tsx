@@ -1,13 +1,19 @@
 import React from 'react';
-import './PopupWithForm.css'
+import './PopupWithForm.css';
 
-function PopupWithForm(props) {
-  const {
-    isOpen,
-    onClose,
-    onSubmit,
-    children,
-  } = props;
+export type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit?: (evt: React.FormEvent<HTMLFormElement>) => void;
+  children: React.ReactNode;
+};
+
+const PopupWithForm: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  children,
+}) => {
 
   return (
     <div className={'popup ' + (isOpen && 'popup_opened')}>

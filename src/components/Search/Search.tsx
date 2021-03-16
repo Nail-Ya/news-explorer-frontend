@@ -2,11 +2,15 @@ import React from 'react';
 import './Search.css';
 import SearchForm from './../SearchForm/SearchForm';
 
-const Search = props => {
-  const {
-    onChangeRequestValue,
-    onSearchArticles,
-  } = props;
+export type Props = {
+  onChangeRequestValue: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearchArticles: (evt: React.FormEvent<HTMLFormElement>) => void;
+};
+
+const Search: React.FC<Props> = ({
+  onChangeRequestValue,
+  onSearchArticles,
+}) => {
 
   return (
     <section className="search">
@@ -19,7 +23,7 @@ const Search = props => {
         />
       </div>
     </section>
-  )
+  );
 }
 
 export default Search;
