@@ -1,24 +1,37 @@
 import React from 'react';
-import './LoginPopup.css'
+import './LoginPopup.css';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
+import { InputValues, ErrorValues } from './../../utils/interfaces';
 
-const LoginPopup = props => {
-  const {
-    isOpen,
-    onClose,
-    onChangePopup,
-    onLogin,
-    isValid,
-    handleChange,
-    isLoading,
-    values,
-    error,
-    errorFormText,
-  } = props;
+export type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+  onChangePopup: () => void;
+  onLogin: (email: string, password: string) => void;
+  isValid: boolean;
+  handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  isLoading: boolean;
+  values: InputValues;
+  error: ErrorValues;
+  errorFormText: string;
+};
 
-  function handleSubmit(evt) {
+const LoginPopup: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  onChangePopup,
+  onLogin,
+  isValid,
+  handleChange,
+  isLoading,
+  values,
+  error,
+  errorFormText,
+}) => {
+
+  function handleSubmit(evt: React.FormEvent<HTMLFormElement>): void {
     evt.preventDefault();
-    onLogin(values.emailLogin, values.passwordLogin);
+    onLogin(values.emailLogin!, values.passwordLogin!);
   }
 
   // отключение кнопки
@@ -41,8 +54,8 @@ const LoginPopup = props => {
         className="popup__input"
         placeholder="Введите почту"
         required
-        minLength="5"
-        maxLength="30"
+        minLength={5}
+        maxLength={30}
         onChange={handleChange}
         value={values.emailLogin || ''}
       />
@@ -55,8 +68,8 @@ const LoginPopup = props => {
         className="popup__input"
         placeholder="Введите пароль"
         required
-        minLength="5"
-        maxLength="20"
+        minLength={5}
+        maxLength={30}
         onChange={handleChange}
         value={values.passwordLogin || ''}
       />
@@ -68,7 +81,7 @@ const LoginPopup = props => {
         <span className="popup__link" onClick={onChangePopup}>Зарегистрироваться</span>
       </p>
     </PopupWithForm>
-  )
+  );
 }
 
 export default LoginPopup;

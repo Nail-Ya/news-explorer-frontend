@@ -1,18 +1,26 @@
 import React from 'react';
-import './MobileHeaderPopup.css'
+import './MobileHeaderPopup.css';
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from './../../context/CurrentUserContext';
+import { User } from './../../utils/interfaces';
 
-const MobileHeaderPopup = props => {
-  const {
-    isOpen,
-    onClose,
-    onLogin,
-    onSignOut,
-    loggedIn,
-  } = props;
+export type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+  onLogin: () => void;
+  onSignOut: () => void;
+  loggedIn: boolean;
+};
 
-  const currentUser = React.useContext(CurrentUserContext);
+const MobileHeaderPopup: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  onLogin,
+  onSignOut,
+  loggedIn,
+}) => {
+
+  const currentUser: User = React.useContext(CurrentUserContext);
 
   return (
     <div className={'popup-header ' + (isOpen && 'popup-header_opened')}>
@@ -43,7 +51,7 @@ const MobileHeaderPopup = props => {
         </nav>
       </div>
     </div>
-  )
+  );
 }
 
 export default MobileHeaderPopup;

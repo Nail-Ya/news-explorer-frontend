@@ -1,17 +1,23 @@
 import React from 'react';
-import './Navigation.css'
+import './Navigation.css';
 import { NavLink, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from './../../context/CurrentUserContext';
+import { User } from './../../utils/interfaces';
 
-const Navigation = props => {
-  const {
-    onLogin,
-    onSignOut,
-    loggedIn,
-  } = props;
+export type Props = {
+  onLogin: () => void;
+  loggedIn: boolean;
+  onSignOut: () => void;
+};
 
-  const path = useLocation().pathname;
-  const currentUser = React.useContext(CurrentUserContext);
+const Navigation: React.FC<Props> = ({
+  onLogin,
+  onSignOut,
+  loggedIn,
+}) => {
+
+  const path: string = useLocation().pathname;
+  const currentUser: User = React.useContext(CurrentUserContext);
 
   // значения className в зависимости от пути
   const headerNavigationLinkClassName =
@@ -71,7 +77,7 @@ const Navigation = props => {
       }
       </button>
     </nav>
-  )
+  );
 }
 
 export default Navigation;

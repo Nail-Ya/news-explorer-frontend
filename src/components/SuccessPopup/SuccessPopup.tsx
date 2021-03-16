@@ -1,13 +1,18 @@
 import React from 'react';
-import './SuccessPopup.css'
+import './SuccessPopup.css';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
 
-const SuccessPopup = props => {
-  const {
-    isOpen,
-    onClose,
-    onLogin,
-  } = props;
+export type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+  onLogin: () => void;
+};
+
+const SuccessPopup: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  onLogin,
+}) => {
 
   return (
     <PopupWithForm
@@ -17,7 +22,7 @@ const SuccessPopup = props => {
       <p className="popup__title">Пользователь успешно зарегистрирован!</p>
       <span className="popup__link popup__link_type_success" onClick={onLogin}>Войти</span>
     </PopupWithForm>
-  )
+  );
 }
 
 export default SuccessPopup;

@@ -1,7 +1,8 @@
-import {BASE_URL} from './constants.js'
+import {BASE_URL} from './constants';
+import { ErrorResponse, Article, SavedArticle } from './interfaces';
 
 // отправка запроса на регистрацию
-export const register = (email, password, name) => {
+export const register = (email: string, password: string, name: string): Promise<any> => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
@@ -9,10 +10,10 @@ export const register = (email, password, name) => {
     },
     body: JSON.stringify({ email, password, name }),
   })
-  .then((response) => {
+  .then((response: Response) => {
     if (!response.ok){
       return response.json()
-        .then((err) => {
+        .then((err: ErrorResponse) => {
           throw new Error(err.message);
         })
     }
@@ -21,7 +22,7 @@ export const register = (email, password, name) => {
 }
 
 // отправка запроса на логин
-export const authorize = (email, password) => {
+export const authorize = (email: string, password: string): Promise<any> => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -29,10 +30,10 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({ email, password }),
   })
-  .then(response => {
+  .then((response: Response) => {
     if (!response.ok){
       return response.json()
-        .then((err) => {
+        .then((err: ErrorResponse) => {
           throw new Error(err.message);
         })
     }
@@ -47,7 +48,7 @@ export const authorize = (email, password) => {
 };
 
 // отправка запроса для получения данных пользователя
-export const getUserInfo = (token) => {
+export const getUserInfo = (token: string): Promise<any> => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
@@ -55,12 +56,12 @@ export const getUserInfo = (token) => {
       'Authorization': `Bearer ${token}`
     }
   })
-  .then(res => res.json())
-  .then(data => data)
-}
+  .then((res: Response) => res.json())
+  .then(data => data);
+};
 
 // отправка запроса на получение сохраненных статей
-export const getSavedArticles = () => {
+export const getSavedArticles = (): Promise<any> => {
   return fetch(`${BASE_URL}/articles`, {
     method: 'GET',
     headers: {
@@ -68,13 +69,13 @@ export const getSavedArticles = () => {
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     }
   })
-  .then((res) => {
+  .then((res: Response) => {
     return res.json();
   });
 }
 
 // запрос на сохранение статьи в базу данных
-export const saveArticle = (article) => {
+export const saveArticle = (article: Article): Promise<any> => {
   const { keyword, title, description, publishedAt, source, url, urlToImage } = article;
   return fetch(`${BASE_URL}/articles`, {
     method: 'POST',
@@ -92,13 +93,13 @@ export const saveArticle = (article) => {
       image: urlToImage || 'https://хлебов.рф/files/no_photo3.jpg'
     }),
   })
-  .then((res) => {
+  .then((res: Response) => {
     return res.json();
   });
 }
 
 // запрос на удаление статьи из базы данных
-export const deleteArticle = (article) => {
+export const deleteArticle = (article: SavedArticle): Promise<any> => {
   return fetch(`${BASE_URL}/articles/${article._id}`, {
     method: 'DELETE',
     headers: {
@@ -106,8 +107,7 @@ export const deleteArticle = (article) => {
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
     },
   })
-  .then((res) => {
+  .then((res: Response) => {
     return res.json();
   });
 };
-

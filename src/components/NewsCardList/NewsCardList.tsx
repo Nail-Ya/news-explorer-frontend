@@ -1,15 +1,23 @@
 import React from 'react';
-import './NewsCardList.css'
-import NewsCard from './../NewsCard/NewsCard';
+import './NewsCardList.css';
+import NewsCard from '../NewsCard/NewsCard';
+import { Article, SavedArticle } from '../../utils/interfaces';
 
-const NewsCardList = props => {
-  const {
-    articlesToDisplay,
-    onArticleClick,
-    mySavedArticles,
-    loggedIn,
-    onAddArticlesToDisplay,
-  } = props;
+export type Props = {
+  articlesToDisplay: Array<Article>;
+  onArticleClick: (article: Article) => void;
+  mySavedArticles: Array<SavedArticle>;
+  loggedIn: boolean;
+  onAddArticlesToDisplay: () => void;
+};
+
+const NewsCardList: React.FC<Props> = ({
+  articlesToDisplay,
+  onArticleClick,
+  mySavedArticles,
+  loggedIn,
+  onAddArticlesToDisplay,
+}) => {
 
   return (
     <section className="cards">
@@ -17,7 +25,7 @@ const NewsCardList = props => {
         <h2 className="cards__title">Результаты поиска</h2>
         <ul className="cards-wrapper">
           {
-            articlesToDisplay.map((article, index) =>
+            articlesToDisplay.map((article: Article, index: number) =>
               <NewsCard
                 article={article}
                 key={index}
@@ -36,7 +44,7 @@ const NewsCardList = props => {
       </div>
       <button className="cards__button" onClick={onAddArticlesToDisplay}>Показать еще</button>
     </section>
-  )
+  );
 }
 
 export default NewsCardList;

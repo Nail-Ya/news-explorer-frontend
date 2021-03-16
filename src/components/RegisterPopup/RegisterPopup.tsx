@@ -1,25 +1,38 @@
 import React from 'react';
-import './RegisterPopup.css'
+import './RegisterPopup.css';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
+import { InputValues, ErrorValues } from './../../utils/interfaces';
 
-const RegisterPopup = props => {
-  const {
-    isOpen,
-    onClose,
-    onChangePopup,
-    onRegister,
-    error,
-    values,
-    isValid,
-    handleChange,
-    isLoading,
-    errorFormText,
-  } = props;
+export type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+  onChangePopup: () => void;
+  onRegister: (email: string, password: string, name: string) => void;
+  isValid: boolean;
+  handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  isLoading: boolean;
+  values: InputValues;
+  error: ErrorValues;
+  errorFormText: string;
+};
+
+const RegisterPopup: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  onChangePopup,
+  onRegister,
+  error,
+  values,
+  isValid,
+  handleChange,
+  isLoading,
+  errorFormText,
+}) => {
 
   // колбек сабмита формы
-  function handleSubmit(evt) {
+  function handleSubmit(evt: React.FormEvent<HTMLFormElement>): void {
     evt.preventDefault();
-    onRegister(values.email, values.password, values.name);
+    onRegister(values.email!, values.password!, values.name!);
   }
 
   // отключение кнопки
@@ -41,8 +54,8 @@ const RegisterPopup = props => {
         className="popup__input"
         placeholder="Введите почту"
         required
-        minLength="5"
-        maxLength="30"
+        minLength={5}
+        maxLength={30}
         value={values.email || ''} onChange={handleChange}
       />
       <span id="email-input-error" className="popup__input_error_active">{error.email || ''}</span>
@@ -53,8 +66,8 @@ const RegisterPopup = props => {
         className="popup__input"
         placeholder="Введите пароль"
         required
-        minLength="5"
-        maxLength="20"
+        minLength={5}
+        maxLength={20}
         onChange={handleChange}
         value={values.password || ''}
       />
@@ -66,8 +79,8 @@ const RegisterPopup = props => {
         className="popup__input"
         placeholder="Введите своё имя"
         required
-        minLength="5"
-        maxLength="20"
+        minLength={5}
+        maxLength={20}
         onChange={handleChange}
         value={values.name || ''}
       />
@@ -79,7 +92,7 @@ const RegisterPopup = props => {
         <span className="popup__link" onClick={onChangePopup}>Войти</span>
       </p>
     </PopupWithForm>
-  )
+  );
 }
 
 export default RegisterPopup;

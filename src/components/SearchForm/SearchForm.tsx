@@ -1,11 +1,15 @@
 import React from 'react';
-import './SearchForm.css'
+import './SearchForm.css';
 
-const SearchForm = props => {
-  const {
-    onSearchArticles,
-    onChangeRequestValue
-  } = props;
+export type Props = {
+  onChangeRequestValue: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearchArticles: (evt: React.FormEvent<HTMLFormElement>) => void;
+};
+
+const SearchForm: React.FC<Props> = ({
+  onChangeRequestValue,
+  onSearchArticles,
+}) => {
 
   return (
     <form className="search__form" onSubmit={onSearchArticles}>
@@ -18,7 +22,7 @@ const SearchForm = props => {
       />
       <button className="search__button" type="submit">Искать</button>
     </form>
-  )
+  );
 }
 
 export default SearchForm;

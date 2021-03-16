@@ -1,14 +1,17 @@
 import React from 'react';
-import './NotFound.css'
+import './NotFound.css';
 import notFoundIcon from '../../images/not-found-icon.svg';
 
-const NotFound = props => {
-  const {
-    errorNewsServer,
-  } = props;
+export type Props = {
+  errorNewsServer: boolean;
+};
+
+const NotFound: React.FC<Props> = ({
+  errorNewsServer
+}) => {
 
   // если возникла ошибка на сервере NewsApi, меняем текст ошибки
-  const titleText = `${
+  const titleText: string = `${
     errorNewsServer
     ?
     'Во время запроса произошла ошибка'
@@ -16,7 +19,7 @@ const NotFound = props => {
     'Ничего не найдено'
   }`
 
-  const subtitleText = `${
+  const subtitleText: string = `${
     errorNewsServer
     ?
     'Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'
@@ -30,7 +33,7 @@ const NotFound = props => {
       <h3 className="not-found__title">{titleText}</h3>
       <p className="not-found__subtitle">{subtitleText}</p>
     </section>
-  )
+  );
 }
 
 export default NotFound;
