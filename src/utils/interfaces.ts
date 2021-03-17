@@ -71,3 +71,28 @@ export interface NewsServerResponseAtLogin {
 export interface ServerResponseWhenRequestingSavedArticles {
   data: Array<SavedArticle>;
 };
+
+// redux
+export type ArticleState = {
+  articles: Array<Article>;
+  articlesToDisplay: Array<Article>;
+  mySavedArticles: Array<SavedArticle>;
+};
+
+export type ArticleAction = {
+  type: string;
+  articles?: Array<Article>;
+  articlesToDisplay?: Array<Article>;
+  mySavedArticles?: Array<SavedArticle>;
+};
+
+export type UserState = {
+  currentUser: User;
+  isLoggedIn: boolean;
+};
+
+export type UserAction = {
+  type: string;
+  currentUser?: User;
+  isLoggedIn?: boolean;
+};

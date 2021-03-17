@@ -1,18 +1,13 @@
 import React from 'react';
 import './SavedNewsHeader.css';
-import { CurrentUserContext } from './../../context/CurrentUserContext';
 import { Article, SavedArticle, User } from '../../utils/interfaces';
+import { RootState } from './../../store/reducers/rootReducer';
+import { useSelector } from 'react-redux';
 
-export type Props = {
-  mySavedArticles: Array<Article | SavedArticle>;
-};
+const SavedNewsHeader: React.FC = () => {
 
-const SavedNewsHeader: React.FC<Props> = ({
-  mySavedArticles
-}) => {
-
-  const currentUser: User = React.useContext(CurrentUserContext);
-
+  const mySavedArticles: Array<SavedArticle> = useSelector((state: RootState) => state.articles.mySavedArticles);
+  const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
   const keywordsArray: Array<string> = mySavedArticles.map((item: Article | SavedArticle) => item.keyword);
   const uniqueKeywords: Array<string> = Array.from(new Set(keywordsArray));
   // стейт для выражения 'сохранённых статей'

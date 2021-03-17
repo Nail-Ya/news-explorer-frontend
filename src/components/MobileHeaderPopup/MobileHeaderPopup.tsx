@@ -1,15 +1,15 @@
 import React from 'react';
 import './MobileHeaderPopup.css';
 import { Link } from 'react-router-dom';
-import { CurrentUserContext } from './../../context/CurrentUserContext';
 import { User } from './../../utils/interfaces';
+import { RootState } from './../../store/reducers/rootReducer';
+import { useSelector } from 'react-redux';
 
 export type Props = {
   isOpen: boolean;
   onClose: () => void;
   onLogin: () => void;
   onSignOut: () => void;
-  loggedIn: boolean;
 };
 
 const MobileHeaderPopup: React.FC<Props> = ({
@@ -17,10 +17,10 @@ const MobileHeaderPopup: React.FC<Props> = ({
   onClose,
   onLogin,
   onSignOut,
-  loggedIn,
 }) => {
 
-  const currentUser: User = React.useContext(CurrentUserContext);
+  const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
+  const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
 
   return (
     <div className={'popup-header ' + (isOpen && 'popup-header_opened')}>
@@ -32,13 +32,13 @@ const MobileHeaderPopup: React.FC<Props> = ({
         <nav className="header-navigation header-navigation_type_mobile">
           <Link  to="/main" onClick={onClose} className="header-navigation__link header-navigation__link_type_mobile">Главная</Link>
           {
-            loggedIn
+            isLoggedIn
             &&
             <Link to="/saved-news" onClick={onClose} className="header-navigation__link header-navigation__link_type_mobile">Сохранённые статьи</Link>
           }
-          <button className="header-navigation__button header-navigation__button_type_mobile" onClick={loggedIn ? onSignOut : onLogin}>
+          <button className="header-navigation__button header-navigation__button_type_mobile" onClick={isLoggedIn ? onSignOut : onLogin}>
           {
-            loggedIn
+            isLoggedIn
             ?
             <>
               {currentUser.name}

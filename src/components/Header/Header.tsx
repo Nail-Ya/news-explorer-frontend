@@ -6,14 +6,12 @@ import { Link, useLocation } from 'react-router-dom';
 export type Props = {
   onLogin: () => void;
   onMobileHeader: () => void;
-  loggedIn: boolean;
   onSignOut: () => void;
 };
 
 const Header: React.FC<Props> = ({
   onLogin,
   onMobileHeader,
-  loggedIn,
   onSignOut
 }) => {
 
@@ -53,7 +51,6 @@ const Header: React.FC<Props> = ({
         <Link to="/main" className={headerLogoClassName}>NewsExplorer</Link>
         <Navigation
           onLogin={onLogin}
-          loggedIn={loggedIn}
           onSignOut={onSignOut}
         />
         <button className={headerBurgerMenuButtonClassName} onClick={onMobileHeader}></button>

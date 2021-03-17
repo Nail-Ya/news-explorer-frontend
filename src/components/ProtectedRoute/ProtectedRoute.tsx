@@ -7,8 +7,6 @@ export type Props = {
   handleLoginClick: () => void;
   path: string;
   onArticleClick: (article: SavedArticle) => void;
-  mySavedArticles: Array<SavedArticle>;
-  loggedIn: boolean;
 };
 
 const ProtectedRoute: React.FC<Props> = ({
@@ -16,22 +14,20 @@ const ProtectedRoute: React.FC<Props> = ({
   handleLoginClick,
   path,
   onArticleClick,
-  mySavedArticles,
-  loggedIn,
 }) => {
 
-  const isloggedIn: boolean = JSON.parse(localStorage.getItem('loggedIn') || 'false');
+  const isLoggedIn: boolean = JSON.parse(localStorage.getItem('loggedIn') || 'false');
   // открытие попапа авторизации
   React.useEffect(() => {
-    if (!isloggedIn) {
+    if (!isLoggedIn) {
       handleLoginClick();
     }
-  }, [isloggedIn, handleLoginClick]);
+  }, [isLoggedIn, handleLoginClick]);
 
   return (
     <Route>
       {
-        () => isloggedIn ? <Component handleLoginClick={handleLoginClick} path={path} onArticleClick={onArticleClick} mySavedArticles={mySavedArticles} loggedIn={loggedIn} /> : <Redirect to="/main" />
+        () => isLoggedIn ? <Component handleLoginClick={handleLoginClick} path={path} onArticleClick={onArticleClick} /> : <Redirect to="/main" />
       }
     </Route>
   );
