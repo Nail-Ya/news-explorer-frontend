@@ -11,11 +11,29 @@ import SuccessPopup from '../SuccessPopup/SuccessPopup';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import * as newsApi from '../../utils/NewsApi';
 import * as mainApi from '../../utils/MainApi';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { Article, SavedArticle, InputValues, ErrorValues, User, ServerResponseAtLogin, ServerResponseWhenRequestingSavedArticles, NewsServerResponseAtLogin } from '../../utils/interfaces';
 
+import { RootState } from './../../store/reducers/rootReducer';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  setArticlesActionCreator,
+  setArticlesToDisplayActionCreator,
+  setMySavedArticlesActionCreator
+} from '../../store/actions/articlesActionCreators';
+import {
+  setCurrentUserActionCreator,
+  setIsLoggedInActionCreator,
+} from '../../store/actions/userActionCreators';
+
 function App() {
+
+  const articles: Array<Article> = useSelector((state: RootState) => state.articles.articles);
+  const articlesToDisplay: Array<Article> = useSelector((state: RootState) => state.articles.articlesToDisplay);
+  const mySavedArticles: Array<SavedArticle> = useSelector((state: RootState) => state.articles.mySavedArticles);
+  const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
+
+  const dispatch = useDispatch();
 
   const history = useHistory();
   // state попапов
@@ -24,11 +42,7 @@ function App() {
   const [isMobileHeaderPopupOpen, setIsMobileHeaderPopupOpen] = React.useState<boolean>(false);
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = React.useState<boolean>(false);
 
-  // state статей
-  const [articles, setArticles] = React.useState<Array<Article>>(JSON.parse(localStorage.getItem('articles') || '[]')); // state всех статей
-  const [articlesToDisplay, setArticlesToDisplay] = React.useState<Array<Article>>(JSON.parse(localStorage.getItem('articlesToDisplay') || '[]')); // state первых 3 статей для показа пользователю
   const [keyword, setKeyword] = React.useState<string>(''); // значение запроса
-  const [mySavedArticles, setMySavedArticles] = React.useState<Array<SavedArticle>>([]); // state сохраненных пользователем карточек
   // state вспомогательных компонентов
   const [isNewsCardListShow, setIsNewsCardListShow] = React.useState<boolean>(JSON.parse(localStorage.getItem('isNewsCardListShow') || 'false')); // показывать компонент NewsCardList
   const [isPreloaderShow, setIsPreloaderShow] = React.useState<boolean>(false); // показывать компонент Preloader
@@ -41,14 +55,9 @@ function App() {
   const [values, setValues] = React.useState<InputValues>({});
   const [isValid, setIsValid] = React.useState<boolean>(false);
   const [error, setError] = React.useState<ErrorValues>({});
-  //state с данными пользователя
-  const [currentUser, setCurrenUser] = React.useState<User>({});
 
   // state для отображения загрузки
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  // state состояния пользователя
-  const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
 
   // state ошибки от сервера NewsApi
   const [errorNewsServer, setErrorNewsServer] = React.useState<boolean>(false);
@@ -58,13 +67,14 @@ function App() {
     const jwt = localStorage.getItem('jwt');
 
     if (jwt) {
-      setLoggedIn(true);
+      dispatch(setIsLoggedInActionCreator(true));
       getSavedArticles();
-      setCurrenUser(JSON.parse(localStorage.getItem('user') || ''));
-      setArticles(JSON.parse(localStorage.getItem('articles') || '[]'));
+      dispatch(setCurrentUserActionCreator(JSON.parse(localStorage.getItem('user') || '')));
+      dispatch(setArticlesActionCreator(JSON.parse(localStorage.getItem('articles') || '[]')));
       localStorage.setItem('loggedIn', JSON.stringify(true));
     }
-  },[loggedIn]);
+    // eslint-disable-next-line
+  }, [isLoggedIn, dispatch]);
 
   // функция валидации формы: отслеживает инпуты и отображает ошибку
   function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -73,7 +83,7 @@ function App() {
     setValues({ ...values, [name]: value });
     setError({ ...error, [name]: e.target.validationMessage });
     setIsValid(e.target.closest('form')!.checkValidity());
-  }
+  };
 
   // функция сбрасывает ошибки при закрытии попапа/сабмита формы
   function resetForm(): void {
@@ -81,17 +91,17 @@ function App() {
     setIsValid(false);
     setError({});
     setErrorFormText('');
-  }
+  };
 
   // Колбек для открытия LoginPopup
   function handleLoginClick(): void {
     setIsLoginPopupOpen(true);
-  }
+  };
 
   // Колбек для открытия MobileHeader
   function handleHeaderMobileClick(): void {
     setIsMobileHeaderPopupOpen(true);
-  }
+  };
 
   // Закрыть все попапы
   function closeAllPopups(): void {
@@ -100,7 +110,7 @@ function App() {
     setIsMobileHeaderPopupOpen(false);
     setIsSuccessPopupOpen(false);
     resetForm();
-  }
+  };
 
   // Функция для перехода по ссылке в попап регистрации
   function handleOpenRegisterPopup(): void {
@@ -112,7 +122,7 @@ function App() {
   function handleOpenLoginPopup(): void {
     closeAllPopups();
     setIsLoginPopupOpen(true);
-  }
+  };
 
   // поиск новостей (функция передается в обработчик onSubmit формы поиска)
   const handleSearchArticles = (evt: React.FormEvent<HTMLFormElement>): void => {
@@ -121,8 +131,8 @@ function App() {
     setIsNewsCardListShow(false);
     setIsPreloaderShow(true);
     setIsNotFoundShow(false);
-    setArticles([]);
-    setArticlesToDisplay([]);
+    dispatch(setArticlesActionCreator([]));
+    dispatch(setArticlesToDisplayActionCreator([]));
 
     newsApi.getNews(keyword)
       .then((res: NewsServerResponseAtLogin) => {
@@ -133,8 +143,8 @@ function App() {
           item.keyword = keyword
           return item;
         });
-        setArticles(newArray);
-        setArticlesToDisplay(newArray.slice(0, 3));
+        dispatch(setArticlesActionCreator(newArray));
+        dispatch(setArticlesToDisplayActionCreator(newArray.slice(0, 3)));
 
         // добавляем в локальное хранилище массив статей и значение запроса
         localStorage.setItem('articles', JSON.stringify(newArray));
@@ -158,16 +168,19 @@ function App() {
         setIsPreloaderShow(false);
         setErrorNewsServer(true);
       });
-  }
+  };
   // отслеживаем изменение инпута формы поиска новостей
   function handleRequestValueChange(evt: React.ChangeEvent<HTMLInputElement>): void {
     setKeyword(evt.target.value)
-  }
+  };
 
   // добавляем 3 статьи к показу по кнопке показать еще
   function addArticlesToDisplay(): void {
-    setArticlesToDisplay([...articlesToDisplay, ...articles.slice(articlesToDisplay.length, articlesToDisplay.length + 3)]);
-  }
+    dispatch(setArticlesToDisplayActionCreator([
+      ...articlesToDisplay,
+      ...articles.slice(articlesToDisplay.length, articlesToDisplay.length + 3)
+    ]));
+  };
 
   // регистрация пользователя
   function handleUserRegister(email: string, password: string, name: string): Promise<any> {
@@ -185,7 +198,7 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       });
-  }
+  };
 
   // Логин пользователя
   function handleLogin(email: string, password: string): Promise<any> {
@@ -200,8 +213,8 @@ function App() {
           .then((res: User) => {
             // записываем данные пользователя в локальное хранилище
             localStorage.setItem('user', JSON.stringify(res));
-            setCurrenUser(res);
-            setLoggedIn(true);
+            dispatch(setCurrentUserActionCreator(res));
+            dispatch(setIsLoggedInActionCreator(true));
             history.push('/main');
           })
           .catch((err) => console.log(`Ошибка при получении данных пользователя после входа в систему: ${err}`));
@@ -213,17 +226,10 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       });
-  }
+  };
 
   // выход пользователя из системы
   function handleSignOut(): void {
-    setLoggedIn(false);
-    setArticles([]);
-    setArticlesToDisplay([]);
-    setMySavedArticles([]);
-    setIsNewsCardListShow(false);
-    setIsMobileHeaderPopupOpen(false);
-
     localStorage.removeItem('jwt');
     localStorage.removeItem('user');
     localStorage.removeItem('articles');
@@ -233,26 +239,33 @@ function App() {
     localStorage.removeItem('loggedIn');
 
     history.push('/main');
-  }
+
+    dispatch(setIsLoggedInActionCreator(false));
+    dispatch(setArticlesActionCreator([]));
+    dispatch(setArticlesToDisplayActionCreator([]));
+    dispatch(setMySavedArticlesActionCreator([]));
+    setIsNewsCardListShow(false);
+    setIsMobileHeaderPopupOpen(false);
+  };
 
   // запрос сохраненных карточек
   function getSavedArticles(): Promise<any> {
     return mainApi.getSavedArticles()
       .then((res: ServerResponseWhenRequestingSavedArticles) => {
         if (res) {
-          setMySavedArticles(res.data);
+          dispatch(setMySavedArticlesActionCreator(res.data));
         } else {
-          setMySavedArticles([]);
+          dispatch(setMySavedArticlesActionCreator([]));
         }
       })
       .catch((err) => {
         console.log(`Ошибка при загрузке сохраненных новостей: ${err}`);
       });
-  }
+  };
 
   // сохранить статью
   function handleSaveArticle(article: Article): Promise<any> | void {
-    if (loggedIn) {
+    if (isLoggedIn) {
       return mainApi.saveArticle(article)
         .then((res) => {
           if (res) {
@@ -262,110 +275,100 @@ function App() {
         .catch((err) => {
           console.log(`Ошибка при сохранении новости: ${err}`);
         });
-    }
-  }
+    };
+  };
 
   // удалить статью
   function handleDeleteArticle(article: SavedArticle): Promise<any> {
     return mainApi.deleteArticle(article)
       .then((res) => {
         const mySavedArticlesArray: Array<SavedArticle> = mySavedArticles.filter((item: SavedArticle) => (item._id !== article._id));
-        setMySavedArticles(mySavedArticlesArray);
+        dispatch(setMySavedArticlesActionCreator(mySavedArticlesArray));
       })
       .catch((err) => {
         console.log(`Ошибка при удалении новости: ${err}`);
       });
-  }
+  };
 
   // колбек при нажатии кнопки на карточке
   function handleArticleClick(article: any): void {
-    if (!loggedIn) {
+    if (!isLoggedIn) {
       return setIsLoginPopupOpen(true);
-    }
+    };
     const savedArticle: any = mySavedArticles.find((item: SavedArticle) => item.link === article.url || item.link === article.link);
     if (!savedArticle) {
       handleSaveArticle(article);
     } else {
       handleDeleteArticle(savedArticle);
-    }
-  }
+    };
+  };
 
   return (
     <div className="page">
-      <CurrentUserContext.Provider value={currentUser}>
-        <Header
-          onLogin={handleLoginClick}
-          onMobileHeader={handleHeaderMobileClick}
-          loggedIn={loggedIn}
+      <Header
+        onLogin={handleLoginClick}
+        onMobileHeader={handleHeaderMobileClick}
+        onSignOut={handleSignOut}
+      />
+      <Switch>
+        <Route path="/main">
+          <Main
+            onSearchArticles={handleSearchArticles}
+            onChangeRequestValue={handleRequestValueChange}
+            onAddArticlesToDisplay={addArticlesToDisplay}
+            isNewsCardListShow={isNewsCardListShow}
+            isPreloaderShow={isPreloaderShow}
+            isNotFoundShow={isNotFoundShow}
+            errorNewsServer={errorNewsServer}
+            onArticleClick={handleArticleClick}
+          />
+        </Route>
+        <ProtectedRoute
+          path="/saved-news"
+          component={SavedNews}
+          handleLoginClick={handleLoginClick}
+          onArticleClick={handleArticleClick}
+        />
+        <Redirect from='/' to='/main' />
+      </Switch>
+      <Footer />
+      <section className="popups">
+        <LoginPopup
+          isOpen={isLoginPopupOpen}
+          onClose={closeAllPopups}
+          onChangePopup={handleOpenRegisterPopup}
+          onLogin={handleLogin}
+          error={error}
+          values={values}
+          isValid={isValid}
+          handleChange={handleChange}
+          errorFormText={errorFormText}
+          isLoading={isLoading}
+        />
+        <RegisterPopup
+          isOpen={isRegisterPopupOpen}
+          onClose={closeAllPopups}
+          onChangePopup={handleOpenLoginPopup}
+          onRegister={handleUserRegister}
+          error={error}
+          values={values}
+          isValid={isValid}
+          handleChange={handleChange}
+          errorFormText={errorFormText}
+          isLoading={isLoading}
+        />
+        <MobileHeaderPopup
+          isOpen={isMobileHeaderPopupOpen}
+          onClose={closeAllPopups}
+          onLogin={handleOpenLoginPopup}
           onSignOut={handleSignOut}
         />
-        <Switch>
-          <Route path="/main">
-            <Main
-              articlesToDisplay={articlesToDisplay}
-              onSearchArticles={handleSearchArticles}
-              onChangeRequestValue={handleRequestValueChange}
-              onAddArticlesToDisplay={addArticlesToDisplay}
-              isNewsCardListShow={isNewsCardListShow}
-              isPreloaderShow={isPreloaderShow}
-              isNotFoundShow={isNotFoundShow}
-              errorNewsServer={errorNewsServer}
-              onArticleClick={handleArticleClick}
-              mySavedArticles={mySavedArticles}
-              loggedIn={loggedIn}
-            />
-          </Route>
-          <ProtectedRoute
-            path="/saved-news"
-            component={SavedNews}
-            handleLoginClick={handleLoginClick}
-            onArticleClick={handleArticleClick}
-            mySavedArticles={mySavedArticles}
-            loggedIn={loggedIn}
-          />
-          <Redirect from='/' to='/main' />
-        </Switch>
-        <Footer />
-        <section className="popups">
-          <LoginPopup
-            isOpen={isLoginPopupOpen}
-            onClose={closeAllPopups}
-            onChangePopup={handleOpenRegisterPopup}
-            onLogin={handleLogin}
-            error={error}
-            values={values}
-            isValid={isValid}
-            handleChange={handleChange}
-            errorFormText={errorFormText}
-            isLoading={isLoading}
-          />
-          <RegisterPopup
-            isOpen={isRegisterPopupOpen}
-            onClose={closeAllPopups}
-            onChangePopup={handleOpenLoginPopup}
-            onRegister={handleUserRegister}
-            error={error}
-            values={values}
-            isValid={isValid}
-            handleChange={handleChange}
-            errorFormText={errorFormText}
-            isLoading={isLoading}
-          />
-
-          <MobileHeaderPopup
-            isOpen={isMobileHeaderPopupOpen}
-            onClose={closeAllPopups}
-            onLogin={handleOpenLoginPopup}
-            loggedIn={loggedIn}
-            onSignOut={handleSignOut}
-          />
-          <SuccessPopup
-            isOpen={isSuccessPopupOpen}
-            onClose={closeAllPopups}
-            onLogin={handleOpenLoginPopup}
-          />
-        </section>
-      </CurrentUserContext.Provider>
+        <SuccessPopup
+          isOpen={isSuccessPopupOpen}
+          onClose={closeAllPopups}
+          onLogin={handleOpenLoginPopup}
+        />
+      </section>
     </div>
   );
 }

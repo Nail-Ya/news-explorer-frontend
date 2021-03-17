@@ -1,23 +1,23 @@
 import React from 'react';
 import './Navigation.css';
 import { NavLink, useLocation } from 'react-router-dom';
-import { CurrentUserContext } from './../../context/CurrentUserContext';
 import { User } from './../../utils/interfaces';
+import { RootState } from './../../store/reducers/rootReducer';
+import { useSelector } from 'react-redux';
 
 export type Props = {
   onLogin: () => void;
-  loggedIn: boolean;
   onSignOut: () => void;
 };
 
 const Navigation: React.FC<Props> = ({
   onLogin,
   onSignOut,
-  loggedIn,
 }) => {
 
   const path: string = useLocation().pathname;
-  const currentUser: User = React.useContext(CurrentUserContext);
+  const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
+  const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
 
   // значения className в зависимости от пути
   const headerNavigationLinkClassName =
@@ -60,13 +60,13 @@ const Navigation: React.FC<Props> = ({
     <nav className="header-navigation">
       <NavLink to="/main" className={headerNavigationLinkClassName} activeClassName={headerNavigationActiveLinkClassName}>Главная</NavLink>
       {
-        loggedIn
+        isLoggedIn
         &&
         <NavLink to="/saved-news" className={headerNavigationLinkClassName} activeClassName={headerNavigationActiveLinkClassName}>Сохранённые статьи</NavLink>
       }
-      <button onClick={loggedIn ? onSignOut : onLogin} className={headerNavigationButtonClassName}>
+      <button onClick={isLoggedIn ? onSignOut : onLogin} className={headerNavigationButtonClassName}>
       {
-        loggedIn
+        isLoggedIn
         ?
         <>
           {currentUser.name}

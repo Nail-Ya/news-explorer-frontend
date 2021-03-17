@@ -3,6 +3,8 @@ import './NewsCard.css';
 import { useLocation } from 'react-router-dom';
 import { Article, SavedArticle } from '../../utils/interfaces';
 import { setCorrectDate } from '../../utils/constants';
+import { RootState } from './../../store/reducers/rootReducer';
+import { useSelector } from 'react-redux';
 
 export type Props = {
   cardsImageLink: string;
@@ -11,10 +13,8 @@ export type Props = {
   cardTitle: string;
   cardSubtitle: string;
   cardSource: string;
-  mySavedArticles: Array<Article | SavedArticle>;
   article: Article;
   onArticleClick: (article: Article) => void;
-  loggedIn: boolean;
 };
 
 const NewsCard: React.FC<Props> = ({
@@ -24,13 +24,14 @@ const NewsCard: React.FC<Props> = ({
   cardTitle,
   cardSubtitle,
   cardSource,
-  mySavedArticles,
   article,
   onArticleClick,
-  loggedIn,
 }) => {
 
   const path: string = useLocation().pathname;
+  const mySavedArticles: Array<SavedArticle> = useSelector((state: RootState) => state.articles.mySavedArticles);
+  const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
+
   // определение сохраненной статьи
   const isSavedArticle: boolean = mySavedArticles.some((item: Article | SavedArticle) => {
     return item.link === article.url;
@@ -48,7 +49,7 @@ const NewsCard: React.FC<Props> = ({
 
   const cardStickerClassName =
   `${
-    loggedIn && path === '/main'
+    isLoggedIn && path === '/main'
     ?
     'card__sticker card__sticker_type_dropdown card__sticker_hidden'
     :

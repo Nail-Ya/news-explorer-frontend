@@ -3,23 +3,22 @@ import './SavedNews.css';
 import SavedNewsHeader from './../SavedNewsHeader/SavedNewsHeader';
 import NewsCard from './../NewsCard/NewsCard';
 import { Article, SavedArticle } from '../../utils/interfaces';
+import { RootState } from './../../store/reducers/rootReducer';
+import { useSelector } from 'react-redux';
 
 export type Props = {
-  mySavedArticles: Array<Article | SavedArticle>;
   onArticleClick: (article: Article | SavedArticle) => void;
-  loggedIn: boolean;
 };
 
 const SavedNews: React.FC<Props> = ({
-  mySavedArticles,
   onArticleClick,
-  loggedIn,
 }) => {
+
+  const mySavedArticles: Array<SavedArticle> = useSelector((state: RootState) => state.articles.mySavedArticles);
+
   return (
     <main className="content">
-      <SavedNewsHeader
-        mySavedArticles={mySavedArticles}
-      />
+      <SavedNewsHeader />
       {
         mySavedArticles.length > 0
         &&
@@ -38,8 +37,6 @@ const SavedNews: React.FC<Props> = ({
                     cardSource={article.source.name || article.source}
                     cardSticker={article.keyword}
                     onArticleClick={onArticleClick}
-                    mySavedArticles={mySavedArticles}
-                    loggedIn={loggedIn}
                   />
                 )
               }

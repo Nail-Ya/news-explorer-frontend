@@ -1,23 +1,21 @@
 import React from 'react';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard';
-import { Article, SavedArticle } from '../../utils/interfaces';
+import { Article } from '../../utils/interfaces';
+import { RootState } from './../../store/reducers/rootReducer';
+import { useSelector } from 'react-redux';
 
 export type Props = {
-  articlesToDisplay: Array<Article>;
   onArticleClick: (article: Article) => void;
-  mySavedArticles: Array<SavedArticle>;
-  loggedIn: boolean;
   onAddArticlesToDisplay: () => void;
 };
 
 const NewsCardList: React.FC<Props> = ({
-  articlesToDisplay,
   onArticleClick,
-  mySavedArticles,
-  loggedIn,
   onAddArticlesToDisplay,
 }) => {
+
+  const articlesToDisplay: Array<Article> = useSelector((state: RootState) => state.articles.articlesToDisplay);
 
   return (
     <section className="cards">
@@ -35,8 +33,6 @@ const NewsCardList: React.FC<Props> = ({
                 cardSubtitle={article.description}
                 cardSource={article.source.name}
                 onArticleClick={onArticleClick}
-                mySavedArticles={mySavedArticles}
-                loggedIn={loggedIn}
               />
             )
           }
