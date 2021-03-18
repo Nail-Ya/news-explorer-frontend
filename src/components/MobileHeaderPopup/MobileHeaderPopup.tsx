@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { User } from './../../utils/interfaces';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
+import classnames from 'classnames';
 
 export type Props = {
   isOpen: boolean;
@@ -22,8 +23,12 @@ const MobileHeaderPopup: React.FC<Props> = ({
   const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
   const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
 
+  const popupClassName: string = classnames('popup-header', {
+    'popup-header_opened': isOpen
+  });
+
   return (
-    <div className={'popup-header ' + (isOpen && 'popup-header_opened')}>
+    <div className={popupClassName}>
       <div className="popup-header-container">
         <header className="header__mobile">
           <Link to="/main" className="header__logo header__logo_type_mobile">NewsExplorer</Link>

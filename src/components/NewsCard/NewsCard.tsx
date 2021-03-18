@@ -5,6 +5,7 @@ import { Article, SavedArticle } from '../../utils/interfaces';
 import { setCorrectDate } from '../../utils/constants';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
+import classnames from 'classnames';
 
 export type Props = {
   cardsImageLink: string;
@@ -37,26 +38,17 @@ const NewsCard: React.FC<Props> = ({
     return item.link === article.url;
   });
 
-  // значения className в зависимости от пути
-  const cardButtonClassName =
-  `${
-    path === '/main'
-    ?
-    isSavedArticle ? 'card__button card__button_type_save-marked' : 'card__button card__button_type_save'
-    :
-    'card__button card__button_type_delete'
-  }`
+  const cardButtonClassName: string = classnames('card__button', {
+    'card__button_type_save-marked': path === '/main' && isSavedArticle,
+    'card__button_type_save': path === '/main' && !isSavedArticle,
+    'card__button_type_delete': path === '/saved-news'
+  });
 
-  const cardStickerClassName =
-  `${
-    isLoggedIn && path === '/main'
-    ?
-    'card__sticker card__sticker_type_dropdown card__sticker_hidden'
-    :
-    'card__sticker card__sticker_type_dropdown'
-  }`
+  const cardStickerClassName: string = classnames('card__sticker card__sticker_type_dropdown', {
+    'card__sticker_hidden': isLoggedIn && path === '/main'
+  });
 
-  const cardStickerText =
+  const cardStickerText: string =
   `${
     path === '/main'
     ?
