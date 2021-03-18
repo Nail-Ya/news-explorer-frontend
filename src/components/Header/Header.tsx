@@ -2,6 +2,7 @@ import React from 'react';
 import './Header.css';
 import Navigation from '../Navigation/Navigation';
 import { Link, useLocation } from 'react-router-dom';
+import classnames from 'classnames';
 
 export type Props = {
   onLogin: () => void;
@@ -17,33 +18,17 @@ const Header: React.FC<Props> = ({
 
   const path: string = useLocation().pathname;
 
-  // значения className в зависимости от пути
-  const headerClassName =
-  `${
-    path === '/main'
-    ?
-    'header'
-    :
-    'header header_theme_white'
-  }`
+  const headerClassName: string = classnames('header', {
+    'header_theme_white': path === '/saved-news'
+  });
 
-  const headerLogoClassName =
-  `${
-    path === '/main'
-    ?
-    'header__logo'
-    :
-    'header__logo header__logo_theme_white'
-  }`
+  const headerLogoClassName: string = classnames('header__logo', {
+    'header__logo_theme_white': path === '/saved-news'
+  });
 
-  const headerBurgerMenuButtonClassName =
-  `${
-    path === '/main'
-    ?
-    'header__burger-menu-button'
-    :
-    'header__burger-menu-button header__burger-menu-button_theme_white'
-  }`
+  const headerBurgerMenuButtonClassName: string = classnames('header__burger-menu-button', {
+    'header__burger-menu-button_theme_white': path === '/saved-news'
+  });
 
   return (
     <header className={headerClassName}>

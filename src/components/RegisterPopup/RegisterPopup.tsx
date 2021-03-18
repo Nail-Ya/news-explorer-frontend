@@ -2,6 +2,7 @@ import React from 'react';
 import './RegisterPopup.css';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
 import { InputValues, ErrorValues } from './../../utils/interfaces';
+import classnames from 'classnames';
 
 export type Props = {
   isOpen: boolean;
@@ -35,10 +36,9 @@ const RegisterPopup: React.FC<Props> = ({
     onRegister(values.email!, values.password!, values.name!);
   }
 
-  // отключение кнопки
-  const submitButton = `${
-    isValid ? 'popup__button' : 'popup__button popup__button_disabled'
-  }`;
+  const submitButtonClassName: string = classnames('popup__button', {
+    'popup__button_disabled': !isValid
+  });
 
   return (
     <PopupWithForm
@@ -86,7 +86,7 @@ const RegisterPopup: React.FC<Props> = ({
       />
       <span id="name-input-error" className="popup__input_error_active">{error.name}</span>
       <span id="form-input-error" className="popup__form_error_active">{errorFormText}</span>
-      <button className={submitButton} type="submit">{isLoading ? 'Регистрация...' : 'Зарегистрироваться'}</button>
+      <button className={submitButtonClassName} type="submit">{isLoading ? 'Регистрация...' : 'Зарегистрироваться'}</button>
       <p className="popup__text">
         или&nbsp;
         <span className="popup__link" onClick={onChangePopup}>Войти</span>

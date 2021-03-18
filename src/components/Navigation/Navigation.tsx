@@ -4,6 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { User } from './../../utils/interfaces';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
+import classnames from 'classnames';
 
 export type Props = {
   onLogin: () => void;
@@ -19,42 +20,23 @@ const Navigation: React.FC<Props> = ({
   const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
   const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
 
-  // значения className в зависимости от пути
-  const headerNavigationLinkClassName =
-  `${
-    path === '/main'
-    ?
-    'header-navigation__link'
-    :
-    'header-navigation__link header-navigation__link_theme_white'
-  }`
+  const headerNavigationLinkClassName: string = classnames('header-navigation__link', {
+    'header-navigation__link_theme_white': path === '/saved-news'
+  });
 
-  const headerNavigationActiveLinkClassName =
-  `${
-    path === '/main'
-    ?
-    'header-navigation__link header-navigation__link_active_black'
-    :
-    'header-navigation__link header-navigation__link_active_white header-navigation__link_theme_white'
-  }`
+  const headerNavigationActiveLinkClassName: string = classnames({
+    'header-navigation__link_active_black': path === '/main',
+    'header-navigation__link_active_white': path === '/saved-news'
+  });
 
-  const headerNavigationButtonClassName =
-  `${
-    path === '/main'
-    ?
-    'header-navigation__button'
-    :
-    'header-navigation__button header-navigation__button_theme_white'
-  }`
+  const headerNavigationButtonClassName: string = classnames('header-navigation__button', {
+    'header-navigation__button_theme_white': path === '/saved-news'
+  });
 
-  const headerNavigationButtonIconClassName =
-  `${
-    path === '/main'
-    ?
-    'header-navigation__button-icon header-navigation__button-icon_theme_black'
-    :
-    'header-navigation__button-icon header-navigation__button-icon_theme_white'
-  }`
+  const headerNavigationButtonIconClassName: string = classnames('header-navigation__button-icon', {
+    'header-navigation__button-icon_theme_black': path === '/main',
+    'header-navigation__button-icon_theme_white': path === '/saved-news'
+  });
 
   return (
     <nav className="header-navigation">
