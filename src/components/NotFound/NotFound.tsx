@@ -1,6 +1,6 @@
 import React from 'react';
 import './NotFound.css';
-import notFoundIcon from '../../images/not-found-icon.svg';
+import Icon from '../Icon/Icon';
 
 export type Props = {
   errorNewsServer: boolean;
@@ -29,7 +29,10 @@ const NotFound: React.FC<Props> = ({
 
   return (
     <section className="not-found">
-      <img src={notFoundIcon} alt="Иконка лупы" className="not-found__image" />
+      <Icon
+        className='not-found__image'
+        name='not-found-icon'
+      />
       <h3 className="not-found__title">{titleText}</h3>
       <p className="not-found__subtitle">{subtitleText}</p>
     </section>

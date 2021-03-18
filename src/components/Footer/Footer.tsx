@@ -1,8 +1,7 @@
 import React from 'react';
 import './Footer.css';
-import githubIcon from '../../images/social-icon1.svg';
-import facebookIcon from '../../images/social-icon2.svg';
 import { Link } from 'react-router-dom';
+import Icon from './../Icon/Icon';
 
 const Footer: React.FC = () => (
   <footer className="footer">
@@ -20,12 +19,18 @@ const Footer: React.FC = () => (
         <ul className="footer__social-icons">
           <li className="footer__social-icon-item">
             <a href="https://github.com/" target="_blank" rel="noreferrer" className="footer__social-icon-link">
-              <img src={githubIcon} alt="Иконка github" className="footer__social-icon" />
+              <Icon
+                className='footer__social-icon'
+                name='github-icon'
+              />
             </a>
           </li>
           <li className="footer__social-icon-item">
             <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" className="footer__social-icon-link">
-              <img src={facebookIcon} alt="Иконка facebook" className="footer__social-icon" />
+              <Icon
+                className='footer__social-icon'
+                name='facebook-icon'
+              />
             </a>
           </li>
         </ul>

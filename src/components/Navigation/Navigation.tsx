@@ -5,6 +5,7 @@ import { User } from './../../utils/interfaces';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
+import Icon from '../Icon/Icon';
 
 export type Props = {
   onLogin: () => void;
@@ -33,10 +34,14 @@ const Navigation: React.FC<Props> = ({
     'header-navigation__button_theme_white': path === '/saved-news'
   });
 
-  const headerNavigationButtonIconClassName: string = classnames('header-navigation__button-icon', {
-    'header-navigation__button-icon_theme_black': path === '/main',
-    'header-navigation__button-icon_theme_white': path === '/saved-news'
-  });
+  const headerNavigationButtonIconName: string =
+  `${
+    path === '/main'
+    ?
+    'signout-icon-white'
+    :
+    'signout-icon-black'
+  }`
 
   return (
     <nav className="header-navigation">
@@ -52,7 +57,10 @@ const Navigation: React.FC<Props> = ({
         ?
         <>
           {currentUser.name}
-          <span className={headerNavigationButtonIconClassName}></span>
+          <Icon
+            className='header-navigation__button-icon'
+            name={headerNavigationButtonIconName}
+          />
         </>
         :
         'Авторизоваться'
