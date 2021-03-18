@@ -79,14 +79,18 @@
 }
 
 .header__close-button {
-  background: url('./../../images/close-icon.svg') center center/cover no-repeat;
-  background-size: 24px 24px;
+  background: transparent;
   width: 24px;
   height: 24px;
   border: none;
   outline: none;
   padding: 0;
   cursor: pointer;
+}
+
+.header__close-button-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .header-navigation_type_mobile {
@@ -111,10 +115,4 @@
   width: 17px;
   height: 16px;
   margin: 0 0 0 10px;
-}
-
-
-.header-navigation__button-icon_theme_black {
-  background: url('./../../images/signout-icon2.svg');
-  background-size: 17px 16px;
 }

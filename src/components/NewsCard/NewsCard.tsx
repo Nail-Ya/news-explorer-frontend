@@ -6,6 +6,7 @@ import { setCorrectDate } from '../../utils/constants';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
+import Icon from '../Icon/Icon';
 
 export type Props = {
   cardsImageLink: string;
@@ -38,11 +39,20 @@ const NewsCard: React.FC<Props> = ({
     return item.link === article.url;
   });
 
-  const cardButtonClassName: string = classnames('card__button', {
-    'card__button_type_save-marked': path === '/main' && isSavedArticle,
-    'card__button_type_save': path === '/main' && !isSavedArticle,
-    'card__button_type_delete': path === '/saved-news'
+  const iconClassName: string = classnames({
+    'card__button-icon_type_save-marked': path === '/main' && isSavedArticle,
+    'card__button-icon_type_save': path === '/main' && !isSavedArticle,
+    'card__button-icon_type_delete': path === '/saved-news'
   });
+
+  const iconName: string =
+  `${
+    path === '/main'
+    ?
+    isSavedArticle ? 'save-icon-marked' : 'save-icon'
+    :
+    'trash-icon'
+  }`
 
   const cardStickerClassName: string = classnames('card__sticker card__sticker_type_dropdown', {
     'card__sticker_hidden': isLoggedIn && path === '/main'
@@ -60,7 +70,12 @@ const NewsCard: React.FC<Props> = ({
   return (
     <li className="card">
       <img className="card__image" src={cardsImageLink} alt={cardTitle} />
-      <button onClick={() => onArticleClick(article)} className={cardButtonClassName}></button>
+      <button onClick={() => onArticleClick(article)} className={'card__button'}>
+        <Icon
+          className={iconClassName}
+          name={iconName}
+        />
+      </button>
       {
         path === '/saved-news'
         &&

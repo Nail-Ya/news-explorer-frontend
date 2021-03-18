@@ -5,6 +5,7 @@ import { User } from './../../utils/interfaces';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
+import Icon from './../Icon/Icon';
 
 export type Props = {
   isOpen: boolean;
@@ -32,26 +33,34 @@ const MobileHeaderPopup: React.FC<Props> = ({
       <div className="popup-header-container">
         <header className="header__mobile">
           <Link to="/main" className="header__logo header__logo_type_mobile">NewsExplorer</Link>
-          <button className="header__close-button" onClick={onClose}></button>
+          <button className="header__close-button" onClick={onClose}>
+            <Icon
+              className='header__close-button-icon'
+              name='close-icon'
+            />
+          </button>
         </header>
         <nav className="header-navigation header-navigation_type_mobile">
-          <Link  to="/main" onClick={onClose} className="header-navigation__link header-navigation__link_type_mobile">Главная</Link>
+          <Link to="/main" onClick={onClose} className="header-navigation__link header-navigation__link_type_mobile">Главная</Link>
           {
             isLoggedIn
             &&
             <Link to="/saved-news" onClick={onClose} className="header-navigation__link header-navigation__link_type_mobile">Сохранённые статьи</Link>
           }
           <button className="header-navigation__button header-navigation__button_type_mobile" onClick={isLoggedIn ? onSignOut : onLogin}>
-          {
-            isLoggedIn
-            ?
-            <>
-              {currentUser.name}
-              <span className="header-navigation__button-icon header-navigation__button-icon_theme_black"></span>
-            </>
-            :
-            'Авторизоваться'
-          }
+            {
+              isLoggedIn
+              ?
+              <>
+                {currentUser.name}
+                <Icon
+                  className='header-navigation__button-icon'
+                  name='signout-icon-white'
+                />
+              </>
+              :
+              'Авторизоваться'
+            }
           </button>
         </nav>
       </div>

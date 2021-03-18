@@ -51,8 +51,7 @@
 }
 
 .popup__close-button {
-  background: url('./../../images/close-icon.svg') 50%/cover no-repeat;
-  background-size: 40.7px 40.7px;
+  background: transparent;
   width: 40.7px;
   height: 40.7px;
   border: none;
@@ -73,4 +72,9 @@
     top: -38px;
     right: -4px;
   }
+}
+
+.popup__close-button-icon {
+  width: 40.7px;
+  height: 40.7px;
 }

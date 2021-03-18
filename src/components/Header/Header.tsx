@@ -3,6 +3,7 @@ import './Header.css';
 import Navigation from '../Navigation/Navigation';
 import { Link, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
+import Icon from './../Icon/Icon';
 
 export type Props = {
   onLogin: () => void;
@@ -26,9 +27,14 @@ const Header: React.FC<Props> = ({
     'header__logo_theme_white': path === '/saved-news'
   });
 
-  const headerBurgerMenuButtonClassName: string = classnames('header__burger-menu-button', {
-    'header__burger-menu-button_theme_white': path === '/saved-news'
-  });
+  const iconName: string =
+  `${
+    path === '/main'
+    ?
+    'burger-icon-white'
+    :
+    'burger-icon-black'
+  }`
 
   return (
     <header className={headerClassName}>
@@ -38,7 +44,12 @@ const Header: React.FC<Props> = ({
           onLogin={onLogin}
           onSignOut={onSignOut}
         />
-        <button className={headerBurgerMenuButtonClassName} onClick={onMobileHeader}></button>
+        <button className='header__burger-menu-button' onClick={onMobileHeader}>
+          <Icon
+            className='header__burger-menu-button-icon'
+            name={iconName}
+          />
+        </button>
       </div>
     </header>
   );
