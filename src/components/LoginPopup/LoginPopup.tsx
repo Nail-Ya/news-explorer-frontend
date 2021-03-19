@@ -78,7 +78,7 @@ const LoginPopup: React.FC<Props> = ({
       <button className={submitButtonClassName} type="submit">{isLoading ? 'Загрузка...' : 'Войти'}</button>
       <p className="popup__text">
         или&nbsp;
-        <span className="popup__link" onClick={onChangePopup}>Зарегистрироваться</span>
+          <span className="popup__link" onClick={onChangePopup}>Зарегистрироваться</span>
       </p>
     </PopupWithForm>
   );

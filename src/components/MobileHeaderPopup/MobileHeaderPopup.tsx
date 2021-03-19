@@ -6,6 +6,7 @@ import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 import Icon from './../Icon/Icon';
+import Portal from './../Portal/Portal';
 
 export type Props = {
   isOpen: boolean;
@@ -29,42 +30,44 @@ const MobileHeaderPopup: React.FC<Props> = ({
   });
 
   return (
-    <div className={popupClassName}>
-      <div className="popup-header-container">
-        <header className="header__mobile">
-          <Link to="/main" className="header__logo header__logo_type_mobile">NewsExplorer</Link>
-          <button className="header__close-button" onClick={onClose}>
-            <Icon
-              className='header__close-button-icon'
-              name='close-icon'
-            />
-          </button>
-        </header>
-        <nav className="header-navigation header-navigation_type_mobile">
-          <Link to="/main" onClick={onClose} className="header-navigation__link header-navigation__link_type_mobile">Главная</Link>
-          {
-            isLoggedIn
-            &&
-            <Link to="/saved-news" onClick={onClose} className="header-navigation__link header-navigation__link_type_mobile">Сохранённые статьи</Link>
-          }
-          <button className="header-navigation__button header-navigation__button_type_mobile" onClick={isLoggedIn ? onSignOut : onLogin}>
+    <Portal>
+      <div className={popupClassName}>
+        <div className="popup-header-container">
+          <header className="header__mobile">
+            <Link to="/main" className="header__logo header__logo_type_mobile">NewsExplorer</Link>
+            <button className="header__close-button" onClick={onClose}>
+              <Icon
+                className='header__close-button-icon'
+                name='close-icon'
+              />
+            </button>
+          </header>
+          <nav className="header-navigation header-navigation_type_mobile">
+            <Link to="/main" onClick={onClose} className="header-navigation__link header-navigation__link_type_mobile">Главная</Link>
             {
               isLoggedIn
-              ?
-              <>
-                {currentUser.name}
-                <Icon
-                  className='header-navigation__button-icon'
-                  name='signout-icon-white'
-                />
-              </>
-              :
-              'Авторизоваться'
+              &&
+              <Link to="/saved-news" onClick={onClose} className="header-navigation__link header-navigation__link_type_mobile">Сохранённые статьи</Link>
             }
-          </button>
-        </nav>
+            <button className="header-navigation__button header-navigation__button_type_mobile" onClick={isLoggedIn ? onSignOut : onLogin}>
+              {
+                isLoggedIn
+                  ?
+                  <>
+                    {currentUser.name}
+                    <Icon
+                      className='header-navigation__button-icon'
+                      name='signout-icon-white'
+                    />
+                  </>
+                  :
+                  'Авторизоваться'
+              }
+            </button>
+          </nav>
+        </div>
       </div>
-    </div>
+    </Portal>
   );
 }
 
