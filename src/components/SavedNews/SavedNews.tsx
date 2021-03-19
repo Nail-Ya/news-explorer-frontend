@@ -1,5 +1,5 @@
 import React from 'react';
-import './SavedNews.css';
+import './SavedNews.scss';
 import SavedNewsHeader from './../SavedNewsHeader/SavedNewsHeader';
 import NewsCard from './../NewsCard/NewsCard';
 import { Article, SavedArticle } from '../../utils/interfaces';

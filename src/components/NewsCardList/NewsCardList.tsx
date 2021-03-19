@@ -1,5 +1,5 @@
 import React from 'react';
-import './NewsCardList.css';
+import './NewsCardList.scss';
 import NewsCard from '../NewsCard/NewsCard';
 import { Article } from '../../utils/interfaces';
 import { RootState } from './../../store/reducers/rootReducer';

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Main.css';
+import './Main.scss';
 import Search from '../Search/Search';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import About from '../About/About';

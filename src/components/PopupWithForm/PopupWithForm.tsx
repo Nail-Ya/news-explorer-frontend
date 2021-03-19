@@ -1,5 +1,5 @@
 import React from 'react';
-import './PopupWithForm.css';
+import './PopupWithForm.scss';
 import classnames from 'classnames';
 import Icon from './../Icon/Icon';
 

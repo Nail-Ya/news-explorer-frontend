@@ -1,12 +1,12 @@
 import React from 'react';
-import './Footer.css';
+import './Footer.scss';
 import { Link } from 'react-router-dom';
 import Icon from './../Icon/Icon';
 
 const Footer: React.FC = () => (
   <footer className="footer">
     <div className="footer-container">
-      <p className="footer__text">&copy; 2020 Supersite, Powered by News API</p>
+      <p className="footer__text">&copy; 2021 Supersite, Powered by News API</p>
       <div className="footer__social">
         <ul className="footer__links">
           <li className="footer__link-item">

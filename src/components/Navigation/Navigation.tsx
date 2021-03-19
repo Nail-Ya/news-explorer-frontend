@@ -1,5 +1,5 @@
 import React from 'react';
-import './Navigation.css';
+import './Navigation.scss';
 import { NavLink, useLocation } from 'react-router-dom';
 import { User } from './../../utils/interfaces';
 import { RootState } from './../../store/reducers/rootReducer';

@@ -1,5 +1,5 @@
 import React from 'react';
-import './SearchForm.css';
+import './SearchForm.scss';
 
 export type Props = {
   onChangeRequestValue: (evt: React.ChangeEvent<HTMLInputElement>) => void;

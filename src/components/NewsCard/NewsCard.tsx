@@ -1,5 +1,5 @@
 import React from 'react';
-import './NewsCard.css';
+import './NewsCard.scss';
 import { useLocation } from 'react-router-dom';
 import { Article, SavedArticle } from '../../utils/interfaces';
 import { setCorrectDate } from '../../utils/constants';

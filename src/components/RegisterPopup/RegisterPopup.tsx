@@ -1,5 +1,5 @@
 import React from 'react';
-import './RegisterPopup.css';
+import './RegisterPopup.scss';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
 import { InputValues, ErrorValues } from './../../utils/interfaces';
 import classnames from 'classnames';

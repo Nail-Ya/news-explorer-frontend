@@ -1,5 +1,5 @@
 import React from 'react';
-import './SuccessPopup.css';
+import './SuccessPopup.scss';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
 
 export type Props = {

@@ -1,0 +1,116 @@
+.header {
+  &__logo {
+    font-family: 'Roboto-slab-bold', 'Arial', 'Callibri', serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+    margin: 30px auto 26px 0;
+    text-decoration: none;
+
+    @media screen and (max-width: 1439px) {
+      margin: 22px auto 18px 0;
+    }
+
+    @media screen and (max-width: 767px) {
+      font-size: 16px;
+      line-height: 24px;
+      margin: 16px auto 16px 0;
+    }
+
+    &_theme_white {
+      color: #1A1B22;
+    }
+  }
+
+  &__mobile-navigation {
+    display: none;
+
+    @media screen and (max-width: 767px) {
+      display: block;
+    }
+  }
+
+  &__mobile {
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  &__logo_type_mobile {
+    margin: 0;
+  }
+
+  &__close-button {
+    background: transparent;
+    width: 24px;
+    height: 24px;
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+
+    &-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &-navigation {
+    &_type_mobile {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__link_type_mobile {
+      margin: 15px 0 0 16px;
+      font-size: 18px;
+      line-height: 56px;
+    }
+
+    &__button_type_mobile {
+      width: calc(100% - 32px);
+      margin: 22px auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__button-icon {
+      width: 17px;
+      height: 16px;
+      margin: 0 0 0 10px;
+    }
+  }
+}
+
+.popup-header {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: -100%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .6s linear;
+
+  &-container {
+    background: #1A1B22;
+    border-radius: 0 0 16px 16px;
+    transition: top .6s ease;
+  }
+
+  &_opened {
+    @media screen and (max-width: 767px) {
+      visibility: visible;
+      opacity: 1;
+      top: 0;
+    }
+  }
+}

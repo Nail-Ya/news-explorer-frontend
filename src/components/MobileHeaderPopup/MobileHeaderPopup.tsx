@@ -1,5 +1,5 @@
 import React from 'react';
-import './MobileHeaderPopup.css';
+import './MobileHeaderPopup.scss';
 import { Link } from 'react-router-dom';
 import { User } from './../../utils/interfaces';
 import { RootState } from './../../store/reducers/rootReducer';

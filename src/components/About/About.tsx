@@ -1,5 +1,5 @@
 import React from 'react';
-import './About.css';
+import './About.scss';
 import avatar from './../../images/avatar.jpg';
 
 const About: React.FC = () => (

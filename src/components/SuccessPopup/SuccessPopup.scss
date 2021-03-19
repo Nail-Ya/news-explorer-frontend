@@ -1,0 +1,36 @@
+.popup {
+  &__title {
+    font-family: 'Roboto-black', 'Arial', 'Callibri', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 28px;
+    color: #1A1B22;
+    margin: 0 0 0 36px;
+
+    @media screen and (max-width: 479px) {
+      margin: 0 0 0 16px;
+    }
+  }
+
+  &__link {
+    color: #2F71E5;
+    cursor: pointer;
+
+    &:hover {
+      opacity: .8;
+    }
+
+    &_type_success {
+      font-family: 'Inter-regular', 'Arial', 'Callibri', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 22px;
+      margin: 14px 0 0 36px;
+      display: block;
+
+      @media screen and (max-width: 479px) {
+        margin: 14px 0 0 18px;
+      }
+    }
+  }
+}

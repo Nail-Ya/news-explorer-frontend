@@ -1,5 +1,5 @@
 import React from 'react';
-import './SavedNewsHeader.css';
+import './SavedNewsHeader.scss';
 import { Article, SavedArticle, User } from '../../utils/interfaces';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';

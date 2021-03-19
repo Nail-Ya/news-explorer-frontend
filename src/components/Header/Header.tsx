@@ -1,5 +1,5 @@
 import React from 'react';
-import './Header.css';
+import './Header.scss';
 import Navigation from '../Navigation/Navigation';
 import { Link, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
