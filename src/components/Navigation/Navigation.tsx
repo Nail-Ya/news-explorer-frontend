@@ -5,7 +5,7 @@ import { User } from './../../utils/interfaces';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
-import Icon from '../Icon/Icon';
+import Icon from '../UI/Icon/Icon';
 
 export type Props = {
   onLogin: () => void;
@@ -51,20 +51,23 @@ const Navigation: React.FC<Props> = ({
         &&
         <NavLink to="/saved-news" className={headerNavigationLinkClassName} activeClassName={headerNavigationActiveLinkClassName}>Сохранённые статьи</NavLink>
       }
-      <button onClick={isLoggedIn ? onSignOut : onLogin} className={headerNavigationButtonClassName}>
-      {
-        isLoggedIn
-        ?
-        <>
-          {currentUser.name}
-          <Icon
-            className='header-navigation__button-icon'
-            name={headerNavigationButtonIconName}
-          />
-        </>
-        :
-        'Авторизоваться'
-      }
+      <button
+        onClick={isLoggedIn ? onSignOut : onLogin}
+        className={headerNavigationButtonClassName}
+      >
+        {
+          isLoggedIn
+          ?
+          <>
+            {currentUser.name}
+            <Icon
+              className='header-navigation__button-icon'
+              name={headerNavigationButtonIconName}
+            />
+          </>
+          :
+          'Авторизоваться'
+        }
       </button>
     </nav>
   );

@@ -1,0 +1,37 @@
+.input {
+  font-family: 'Inter-regular', 'Arial', 'Callibri', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  display: block;
+  border: none;
+  border-bottom: 1px solid rgb(220, 218, 218);
+  width: 358px;
+  margin: 8px auto 0 auto;
+  outline: none;
+  padding: 0 0 13px;
+
+  &:focus {
+    border-bottom: 1px solid rgb(0, 0, 0);
+  }
+
+  @media screen and (max-width: 479px) {
+    width: calc(100% - 32px);
+  }
+
+  &_error_active {
+    font-family: 'Roboto-regular', 'Arial', 'Callibri', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ff0000;
+    display: block;
+    margin: 5px auto 0;
+    width: 84%;
+
+    @media screen and (max-width: 479px) {
+      left: 5%;
+    }
+  }
+}

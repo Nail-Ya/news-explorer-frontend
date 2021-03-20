@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../UI/Button/Button';
 import './SearchForm.scss';
 
 export type Props = {
@@ -20,7 +21,7 @@ const SearchForm: React.FC<Props> = ({
         onChange={onChangeRequestValue}
         required
       />
-      <button className="search__button" type="submit">Искать</button>
+      <Button className="search__button" type="submit">Искать</Button>
     </form>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import './PopupWithForm.scss';
 import classnames from 'classnames';
-import Icon from './../Icon/Icon';
+import Icon from '../UI/Icon/Icon';
 import Portal from '../Portal/Portal';
 
 export type Props = {

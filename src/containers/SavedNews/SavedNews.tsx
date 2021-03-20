@@ -1,9 +1,9 @@
 import React from 'react';
 import './SavedNews.scss';
-import SavedNewsHeader from './../SavedNewsHeader/SavedNewsHeader';
-import NewsCard from './../NewsCard/NewsCard';
+import SavedNewsHeader from '../../components/SavedNewsHeader/SavedNewsHeader';
+import NewsCard from '../../components/NewsCard/NewsCard';
 import { Article, SavedArticle } from '../../utils/interfaces';
-import { RootState } from './../../store/reducers/rootReducer';
+import { RootState } from '../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 
 export type Props = {

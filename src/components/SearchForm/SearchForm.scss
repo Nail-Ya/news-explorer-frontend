@@ -57,19 +57,8 @@
   }
 
   &__button {
-    font-family: 'Roboto-medium', 'Arial', 'Callibri', sans-serif;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 24px;
-    color: #FFFFFF;
     width: 168px;
-    background: #2F71E5;
     box-shadow: 0px 5px 15px rgba(14, 26, 57, 0.2);
-    border-radius: 100px;
-    border: none;
-    text-align: center;
-    outline: none;
-    cursor: pointer;
 
     @media screen and (max-width: 1439px) {
       width: 160px;
@@ -78,14 +67,6 @@
     @media screen and (max-width: 767px) {
       width: 288px;
       height: 56px;
-    }
-
-    &:hover {
-      background: #347EFF;
-    }
-
-    &:active {
-      background: #2A65CC;
     }
   }
 }

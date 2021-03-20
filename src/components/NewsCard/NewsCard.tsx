@@ -6,7 +6,7 @@ import { setCorrectDate } from '../../utils/constants';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
-import Icon from '../Icon/Icon';
+import Icon from '../UI/Icon/Icon';
 
 export type Props = {
   cardsImageLink: string;

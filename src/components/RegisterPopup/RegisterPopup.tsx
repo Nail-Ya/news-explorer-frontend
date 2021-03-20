@@ -3,6 +3,8 @@ import './RegisterPopup.scss';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
 import { InputValues, ErrorValues } from './../../utils/interfaces';
 import classnames from 'classnames';
+import Button from '../UI/Button/Button';
+import { Input } from '../UI/Input/Input';
 
 export type Props = {
   isOpen: boolean;
@@ -48,45 +50,43 @@ const RegisterPopup: React.FC<Props> = ({
     >
       <p className="popup__title">Вход</p>
       <span className="popup__input-text">Email</span>
-      <input
+      <Input
         type="email"
         name="email"
-        className="popup__input"
         placeholder="Введите почту"
-        required
+        required={true}
         minLength={5}
         maxLength={30}
-        value={values.email || ''} onChange={handleChange}
+        onChange={handleChange}
+        value={values.email || ''}
+        errorText={error.email!}
       />
-      <span id="email-input-error" className="popup__input_error_active">{error.email || ''}</span>
       <span className="popup__input-text">Пароль</span>
-      <input
+      <Input
         type="password"
         name="password"
-        className="popup__input"
         placeholder="Введите пароль"
-        required
+        required={true}
         minLength={5}
         maxLength={20}
         onChange={handleChange}
         value={values.password || ''}
+        errorText={error.password!}
       />
-      <span id="password-input-error" className="popup__input_error_active">{error.password}</span>
       <span className="popup__input-text">Имя</span>
-      <input
+      <Input
         type="text"
         name="name"
-        className="popup__input"
         placeholder="Введите своё имя"
-        required
+        required={true}
         minLength={5}
         maxLength={20}
         onChange={handleChange}
         value={values.name || ''}
+        errorText={error.name!}
       />
-      <span id="name-input-error" className="popup__input_error_active">{error.name}</span>
       <span id="form-input-error" className="popup__form_error_active">{errorFormText}</span>
-      <button className={submitButtonClassName} type="submit">{isLoading ? 'Регистрация...' : 'Зарегистрироваться'}</button>
+      <Button className={submitButtonClassName} type="submit">{isLoading ? 'Регистрация...' : 'Зарегистрироваться'}</Button>
       <p className="popup__text">
         или&nbsp;
         <span className="popup__link" onClick={onChangePopup}>Войти</span>

@@ -1,10 +1,10 @@
 import React from 'react';
 import './Main.scss';
-import Search from '../Search/Search';
-import NewsCardList from '../NewsCardList/NewsCardList';
-import About from '../About/About';
-import Preloader from '../Preloader/Preloader';
-import NotFound from '../NotFound/NotFound';
+import Search from '../../components/Search/Search';
+import NewsCardList from '../../components/NewsCardList/NewsCardList';
+import About from '../../components/About/About';
+import Preloader from '../../components/UI/Preloader/Preloader';
+import NotFound from '../../components/NotFound/NotFound';
 import { Article } from '../../utils/interfaces';
 
 export type Props = {

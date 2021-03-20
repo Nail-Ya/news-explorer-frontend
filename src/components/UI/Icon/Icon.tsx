@@ -1,5 +1,5 @@
 import React from 'react';
-import sprite from '../../images/sprite.svg';
+import sprite from '../../../images/sprite.svg';
 
 export type Props = {
   className?: string;

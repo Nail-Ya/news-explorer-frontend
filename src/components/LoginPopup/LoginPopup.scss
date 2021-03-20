@@ -12,62 +12,24 @@
     }
   }
 
-  &__input {
-    font-family: 'Inter-regular', 'Arial', 'Callibri', sans-serif;
+  &__input-text {
+    font-family: 'Roboto-regular', 'Arial', 'Callibri', sans-serif;
     font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: #000;
+    font-size: 12px;
+    line-height: 15px;
+    color: #2F71E5;
     display: block;
-    border: none;
-    border-bottom: 1px solid rgb(220, 218, 218);
-    width: 358px;
-    margin: 8px auto 0 auto;
-    outline: none;
-    padding: 0 0 13px;
-
-    &:focus {
-      border-bottom: 1px solid rgb(0, 0, 0);
-    }
+    margin: 10px 0 0 36px;
 
     @media screen and (max-width: 479px) {
-      width: calc(100% - 32px);
+      margin: 10px 0 0 16px;
     }
 
-    &-text {
-      font-family: 'Roboto-regular', 'Arial', 'Callibri', sans-serif;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 15px;
-      color: #2F71E5;
-      display: block;
-      margin: 10px 0 0 36px;
+    &:nth-of-type(1) {
+      margin: 22px 0 0 36px;
 
       @media screen and (max-width: 479px) {
-        margin: 10px 0 0 16px;
-      }
-
-      &:nth-of-type(1) {
-        margin: 22px 0 0 36px;
-
-        @media screen and (max-width: 479px) {
-          margin: 22px 0 0 16px;
-        }
-      }
-    }
-
-    &_error_active {
-      font-family: 'Roboto-regular', 'Arial', 'Callibri', sans-serif;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 15px;
-      color: #ff0000;
-      display: block;
-      margin: 5px auto 0;
-      width: 84%;
-
-      @media screen and (max-width: 479px) {
-        left: 5%;
+        margin: 22px 0 0 16px;
       }
     }
   }
@@ -85,30 +47,10 @@
   }
 
   &__button {
-    font-family: 'Roboto-medium', 'Arial', 'Callibri', sans-serif;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 24px;
-    text-align: center;
     width: 358px;
     height: 64px;
     display: block;
     margin: 39px auto 0 auto;
-    outline: none;
-    cursor: pointer;
-    border: none;
-    color: #ffffff;
-    background: #2F71E5;
-    border-radius: 100px;
-
-    &:hover {
-      background: #347EFF;
-    }
-
-    &:active {
-      background: #2A65CC;
-      padding-top: 9px;
-    }
 
     &_disabled {
       color: #B6BCBF;

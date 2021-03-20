@@ -1,0 +1,21 @@
+.button {
+  font-family: 'Roboto-medium', 'Arial', 'Callibri', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  color: #ffffff;
+  background: #2F71E5;
+  border-radius: 100px;
+
+  &:hover {
+    background: #347EFF;
+  }
+
+  &:active {
+    background: #2A65CC;
+  }
+}

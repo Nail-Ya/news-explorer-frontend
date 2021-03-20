@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.scss';
 import Header from '../Header/Header';
-import Main from '../Main/Main';
+import Main from '../../containers/Main/Main';
 import Footer from '../Footer/Footer';
-import SavedNews from '../SavedNews/SavedNews';
+import SavedNews from '../../containers/SavedNews/SavedNews';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import MobileHeaderPopup from '../MobileHeaderPopup/MobileHeaderPopup';

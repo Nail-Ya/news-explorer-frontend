@@ -1,6 +1,6 @@
 import React from 'react';
 import './NotFound.scss';
-import Icon from '../Icon/Icon';
+import Icon from '../UI/Icon/Icon';
 
 export type Props = {
   errorNewsServer: boolean;

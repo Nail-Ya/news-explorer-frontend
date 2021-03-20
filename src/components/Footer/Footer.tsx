@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.scss';
 import { Link } from 'react-router-dom';
-import Icon from './../Icon/Icon';
+import Icon from '../UI/Icon/Icon';
 
 const Footer: React.FC = () => (
   <footer className="footer">
