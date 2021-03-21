@@ -96,3 +96,18 @@ export type UserAction = {
   currentUser?: User;
   isLoggedIn?: boolean;
 };
+
+export type componentsVisibilityState = {
+  isPreloaderShow: boolean;
+  isNotFoundShow: boolean;
+  isErrorNewsServer: boolean;
+  isNewsCardListShow: boolean;
+};
+
+export type componentsVisibilityAction = {
+  type: string;
+  isPreloaderShow?: boolean;
+  isNotFoundShow?: boolean;
+  isErrorNewsServer?: boolean;
+  isNewsCardListShow?: boolean;
+};

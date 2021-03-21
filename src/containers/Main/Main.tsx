@@ -6,35 +6,26 @@ import About from '../../components/About/About';
 import Preloader from '../../components/UI/Preloader/Preloader';
 import NotFound from '../../components/NotFound/NotFound';
 import { Article } from '../../utils/interfaces';
+import { useSelector } from 'react-redux';
+import { RootState } from './../../store/reducers/rootReducer';
 
 export type Props = {
-  onChangeRequestValue: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-  onSearchArticles: (evt: React.FormEvent<HTMLFormElement>) => void;
-  isPreloaderShow: boolean;
-  isNotFoundShow: boolean;
-  errorNewsServer: boolean;
-  isNewsCardListShow: boolean;
   onAddArticlesToDisplay: () => void;
   onArticleClick: (article: Article) => void;
 };
 
 const Main: React.FC<Props> = ({
-  onChangeRequestValue,
-  onSearchArticles,
-  isPreloaderShow,
-  isNotFoundShow,
-  errorNewsServer,
-  isNewsCardListShow,
   onAddArticlesToDisplay,
   onArticleClick,
 }) => {
 
+  const isPreloaderShow: boolean = useSelector((state: RootState) => state.componentsVisibility.isPreloaderShow);
+  const isNotFoundShow: boolean = useSelector((state: RootState) => state.componentsVisibility.isNotFoundShow);
+  const isNewsCardListShow: boolean = useSelector((state: RootState) => state.componentsVisibility.isNewsCardListShow);
+
   return (
     <main className="content">
-      <Search
-        onChangeRequestValue={onChangeRequestValue}
-        onSearchArticles={onSearchArticles}
-      />
+      <Search />
       {
         isPreloaderShow
         &&
@@ -43,9 +34,7 @@ const Main: React.FC<Props> = ({
       {
         isNotFoundShow
         &&
-        <NotFound
-          errorNewsServer={errorNewsServer}
-        />
+        <NotFound />
       }
       {
         isNewsCardListShow

@@ -9,10 +9,9 @@ import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import MobileHeaderPopup from '../MobileHeaderPopup/MobileHeaderPopup';
 import SuccessPopup from '../SuccessPopup/SuccessPopup';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
-import * as newsApi from '../../utils/NewsApi';
 import * as mainApi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { Article, SavedArticle, InputValues, ErrorValues, User, ServerResponseAtLogin, ServerResponseWhenRequestingSavedArticles, NewsServerResponseAtLogin } from '../../utils/interfaces';
+import { Article, SavedArticle, InputValues, ErrorValues, User, ServerResponseAtLogin, ServerResponseWhenRequestingSavedArticles } from '../../utils/interfaces';
 
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,6 +24,7 @@ import {
   setCurrentUserActionCreator,
   setIsLoggedInActionCreator,
 } from '../../store/actions/userActionCreators';
+import { setIsNewsCardListShowActionCreator } from '../../store/actions/componentsVisibilityActionCreators';
 
 function App() {
 
@@ -42,12 +42,6 @@ function App() {
   const [isMobileHeaderPopupOpen, setIsMobileHeaderPopupOpen] = React.useState<boolean>(false);
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = React.useState<boolean>(false);
 
-  const [keyword, setKeyword] = React.useState<string>(''); // значение запроса
-  // state вспомогательных компонентов
-  const [isNewsCardListShow, setIsNewsCardListShow] = React.useState<boolean>(JSON.parse(localStorage.getItem('isNewsCardListShow') || 'false')); // показывать компонент NewsCardList
-  const [isPreloaderShow, setIsPreloaderShow] = React.useState<boolean>(false); // показывать компонент Preloader
-  const [isNotFoundShow, setIsNotFoundShow] = React.useState<boolean>(false); // показывать компонент NotFound
-
   // state ошибки в попапе регистрации пользователя
   const [errorFormText, setErrorFormText] = React.useState<string>('');
 
@@ -58,9 +52,6 @@ function App() {
 
   // state для отображения загрузки
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  // state ошибки от сервера NewsApi
-  const [errorNewsServer, setErrorNewsServer] = React.useState<boolean>(false);
 
   // проверяем наличие токена в локальном хранилище
   React.useEffect(() => {
@@ -122,56 +113,6 @@ function App() {
   function handleOpenLoginPopup(): void {
     closeAllPopups();
     setIsLoginPopupOpen(true);
-  };
-
-  // поиск новостей (функция передается в обработчик onSubmit формы поиска)
-  const handleSearchArticles = (evt: React.FormEvent<HTMLFormElement>): void => {
-
-    evt.preventDefault();
-    setIsNewsCardListShow(false);
-    setIsPreloaderShow(true);
-    setIsNotFoundShow(false);
-    dispatch(setArticlesActionCreator([]));
-    dispatch(setArticlesToDisplayActionCreator([]));
-
-    newsApi.getNews(keyword)
-      .then((res: NewsServerResponseAtLogin) => {
-        setIsPreloaderShow(false);
-        setIsNewsCardListShow(true);
-        // добавляем каждой статье keyword ключевое слово
-        const newArray: Array<Article> = res.articles!.map((item: Article) => {
-          item.keyword = keyword
-          return item;
-        });
-        dispatch(setArticlesActionCreator(newArray));
-        dispatch(setArticlesToDisplayActionCreator(newArray.slice(0, 3)));
-
-        // добавляем в локальное хранилище массив статей и значение запроса
-        localStorage.setItem('articles', JSON.stringify(newArray));
-        localStorage.setItem('articlesToDisplay', JSON.stringify(newArray.slice(0, 3)));
-        localStorage.setItem('keyword', keyword);
-
-        //если новостей не найдено, то показать компонент NotFound
-        if (newArray.length === 0) {
-          setIsNotFoundShow(true);
-          setIsNewsCardListShow(false);
-          localStorage.setItem('isNewsCardListShow', JSON.stringify(false));
-        } else {
-          setIsNotFoundShow(false);
-          setIsNewsCardListShow(true);
-          localStorage.setItem('isNewsCardListShow', JSON.stringify(true));
-        }
-      })
-      .catch((err) => {
-        console.log(`Ошибка при поиске новостей: ${err}`);
-        setIsNotFoundShow(true);
-        setIsPreloaderShow(false);
-        setErrorNewsServer(true);
-      });
-  };
-  // отслеживаем изменение инпута формы поиска новостей
-  function handleRequestValueChange(evt: React.ChangeEvent<HTMLInputElement>): void {
-    setKeyword(evt.target.value)
   };
 
   // добавляем 3 статьи к показу по кнопке показать еще
@@ -244,7 +185,7 @@ function App() {
     dispatch(setArticlesActionCreator([]));
     dispatch(setArticlesToDisplayActionCreator([]));
     dispatch(setMySavedArticlesActionCreator([]));
-    setIsNewsCardListShow(false);
+    dispatch(setIsNewsCardListShowActionCreator(false));
     setIsMobileHeaderPopupOpen(false);
   };
 
@@ -313,13 +254,7 @@ function App() {
       <Switch>
         <Route path="/main">
           <Main
-            onSearchArticles={handleSearchArticles}
-            onChangeRequestValue={handleRequestValueChange}
             onAddArticlesToDisplay={addArticlesToDisplay}
-            isNewsCardListShow={isNewsCardListShow}
-            isPreloaderShow={isPreloaderShow}
-            isNotFoundShow={isNotFoundShow}
-            errorNewsServer={errorNewsServer}
             onArticleClick={handleArticleClick}
           />
         </Route>
