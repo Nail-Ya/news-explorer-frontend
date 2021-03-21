@@ -10,12 +10,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from './../../store/reducers/rootReducer';
 
 export type Props = {
-  onAddArticlesToDisplay: () => void;
   onArticleClick: (article: Article) => void;
 };
 
 const Main: React.FC<Props> = ({
-  onAddArticlesToDisplay,
   onArticleClick,
 }) => {
 
@@ -40,7 +38,6 @@ const Main: React.FC<Props> = ({
         isNewsCardListShow
         &&
         <NewsCardList
-          onAddArticlesToDisplay={onAddArticlesToDisplay}
           onArticleClick={onArticleClick}
         />
       }

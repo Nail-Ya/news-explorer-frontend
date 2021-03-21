@@ -28,8 +28,6 @@ import { setIsNewsCardListShowActionCreator } from '../../store/actions/componen
 
 function App() {
 
-  const articles: Array<Article> = useSelector((state: RootState) => state.articles.articles);
-  const articlesToDisplay: Array<Article> = useSelector((state: RootState) => state.articles.articlesToDisplay);
   const mySavedArticles: Array<SavedArticle> = useSelector((state: RootState) => state.articles.mySavedArticles);
   const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
 
@@ -113,14 +111,6 @@ function App() {
   function handleOpenLoginPopup(): void {
     closeAllPopups();
     setIsLoginPopupOpen(true);
-  };
-
-  // добавляем 3 статьи к показу по кнопке показать еще
-  function addArticlesToDisplay(): void {
-    dispatch(setArticlesToDisplayActionCreator([
-      ...articlesToDisplay,
-      ...articles.slice(articlesToDisplay.length, articlesToDisplay.length + 3)
-    ]));
   };
 
   // регистрация пользователя
@@ -254,7 +244,6 @@ function App() {
       <Switch>
         <Route path="/main">
           <Main
-            onAddArticlesToDisplay={addArticlesToDisplay}
             onArticleClick={handleArticleClick}
           />
         </Route>
