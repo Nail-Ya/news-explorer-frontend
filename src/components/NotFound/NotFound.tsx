@@ -15,7 +15,7 @@ const NotFound: React.FC = () => {
     'Во время запроса произошла ошибка'
     :
     'Ничего не найдено'
-  }`
+  }`;
 
   const subtitleText: string = `${
     isErrorNewsServer
@@ -23,7 +23,7 @@ const NotFound: React.FC = () => {
     'Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'
     :
     'К сожалению по вашему запросу ничего не найдено.'
-  }`
+  }`;
 
   return (
     <section className="not-found">

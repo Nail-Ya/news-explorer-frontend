@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './components/App/App';
 import { BrowserRouter } from 'react-router-dom';
-
-import { createStore, compose, applyMiddleware } from 'redux';
+import {
+  createStore,
+  compose,
+  applyMiddleware
+} from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from './store/reducers/rootReducer';
 import thunk from 'redux-thunk';

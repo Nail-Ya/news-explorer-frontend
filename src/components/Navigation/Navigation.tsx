@@ -18,14 +18,11 @@ export type Props = {
   onSignOut: () => void;
 };
 
-const Navigation: React.FC<Props> = ({
-  onSignOut,
-}) => {
+const Navigation: React.FC<Props> = ({ onSignOut }) => {
 
   const path: string = useLocation().pathname;
   const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
   const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
-
   const dispatch = useDispatch();
 
   const headerNavigationLinkClassName: string = classnames('header-navigation__link', {
@@ -41,14 +38,13 @@ const Navigation: React.FC<Props> = ({
     'header-navigation__button_theme_white': path === '/saved-news'
   });
 
-  const headerNavigationButtonIconName: string =
-  `${
+  const headerNavigationButtonIconName: string = `${
     path === '/main'
     ?
     'signout-icon-white'
     :
     'signout-icon-black'
-  }`
+  }`;
 
   const handleOpenLogin = (): void => {
     dispatch(setIsLoginPopupOpenActionCreator(true));
@@ -56,11 +52,23 @@ const Navigation: React.FC<Props> = ({
 
   return (
     <nav className="header-navigation">
-      <NavLink to="/main" className={headerNavigationLinkClassName} activeClassName={headerNavigationActiveLinkClassName}>Главная</NavLink>
+      <NavLink
+        to="/main"
+        className={headerNavigationLinkClassName}
+        activeClassName={headerNavigationActiveLinkClassName}
+      >
+        Главная
+      </NavLink>
       {
         isLoggedIn
         &&
-        <NavLink to="/saved-news" className={headerNavigationLinkClassName} activeClassName={headerNavigationActiveLinkClassName}>Сохранённые статьи</NavLink>
+        <NavLink
+          to="/saved-news"
+          className={headerNavigationLinkClassName}
+          activeClassName={headerNavigationActiveLinkClassName}
+        >
+          Сохранённые статьи
+        </NavLink>
       }
       <button
         onClick={isLoggedIn ? onSignOut : handleOpenLogin}

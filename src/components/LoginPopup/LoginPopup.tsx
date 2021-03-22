@@ -1,17 +1,29 @@
 import React from 'react';
 import './LoginPopup.scss';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
-import { ServerResponseAtLogin, User } from '../../utils/types';
+import {
+  ServerResponseAtLogin,
+  User
+} from '../../utils/types';
 import classnames from 'classnames';
 import Button from './../UI/Button/Button';
 import { Input } from '../UI/Input/Input';
 import * as mainApi from '../../utils/MainApi';
-import { setCurrentUserActionCreator, setIsLoggedInActionCreator } from '../../store/actions/userActionCreators';
-import { useSelector, useDispatch } from 'react-redux';
+import {
+  setCurrentUserActionCreator,
+  setIsLoggedInActionCreator
+} from '../../store/actions/userActionCreators';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import FormValidator from '../../hooks/FormValidator';
 import { RootState } from '../../store/reducers/rootReducer';
-import { setIsLoginPopupOpenActionCreator, setIsRegisterPopupOpenActionCreator } from '../../store/actions/popupsActionCreators';
+import {
+  setIsLoginPopupOpenActionCreator,
+  setIsRegisterPopupOpenActionCreator
+} from '../../store/actions/popupsActionCreators';
 
 const LoginPopup: React.FC = () => {
 
@@ -20,7 +32,6 @@ const LoginPopup: React.FC = () => {
   const history = useHistory();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [errorFormText, setErrorFormText] = React.useState<string>('');
-
   const {
     values,
     handleChange,
@@ -34,17 +45,12 @@ const LoginPopup: React.FC = () => {
     setErrorFormText('');
   }, [isLoginPopupOpen, resetForm]);
 
-  function handleSubmit(evt: React.FormEvent<HTMLFormElement>): void {
-    evt.preventDefault();
-    handleLogin(values.emailLogin!, values.passwordLogin!);
-  }
-
   const submitButtonClassName: string = classnames('popup__button', {
     'popup__button_disabled': !isValid
   });
 
   // Логин пользователя
-  function handleLogin(email: string, password: string): Promise<any> {
+  const handleLogin = (email: string, password: string): Promise<any> => {
     setIsLoading(true);
     return mainApi.authorize(email, password)
       .then((data: ServerResponseAtLogin) => {
@@ -70,6 +76,11 @@ const LoginPopup: React.FC = () => {
         setIsLoading(false);
       });
   };
+
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
+    evt.preventDefault();
+    handleLogin(values.emailLogin!, values.passwordLogin!);
+  }
 
   // Функция для перехода по ссылке в попап регистрации
   const switchToRegisterPopup = (): void => {
@@ -108,7 +119,7 @@ const LoginPopup: React.FC = () => {
         value={values.passwordLogin || ''}
         errorText={errors.passwordLogin!}
       />
-      <span id="form-input-error" className="popup__form_error_active">{errorFormText}</span>
+      <span className="popup__form_error_active">{errorFormText}</span>
       <Button
         className={submitButtonClassName}
         type='submit'
@@ -117,7 +128,12 @@ const LoginPopup: React.FC = () => {
       </Button>
       <p className="popup__text">
         или&nbsp;
-          <span className="popup__link" onClick={switchToRegisterPopup}>Зарегистрироваться</span>
+        <span
+          className="popup__link"
+          onClick={switchToRegisterPopup}
+        >
+          Зарегистрироваться
+        </span>
       </p>
     </PopupWithForm>
   );

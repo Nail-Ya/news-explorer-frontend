@@ -34,8 +34,7 @@ import {
 import { setIsNewsCardListShowActionCreator } from '../../store/actions/componentsVisibilityActionCreators';
 import { setIsMobileHeaderPopupOpenActionCreator } from '../../store/actions/popupsActionCreators';
 
-function App() {
-
+const App: React.FC = () => {
   const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
   const dispatch = useDispatch();
   const history = useHistory();

@@ -3,7 +3,10 @@ import './NewsCardList.scss';
 import NewsCard from '../NewsCard/NewsCard';
 import { Article } from '../../utils/types';
 import { RootState } from './../../store/reducers/rootReducer';
-import { useSelector, useDispatch } from 'react-redux';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 import { setArticlesToDisplayActionCreator } from '../../store/actions/articlesActionCreators';
 
 export type Props = {
@@ -45,7 +48,12 @@ const NewsCardList: React.FC<Props> = ({ getSavedArticles }) => {
           }
         </ul>
       </div>
-      <button className="cards__button" onClick={addArticlesToDisplay}>Показать еще</button>
+      <button
+        className="cards__button"
+        onClick={addArticlesToDisplay}
+      >
+        Показать еще
+      </button>
     </section>
   );
 }

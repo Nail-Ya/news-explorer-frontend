@@ -19,9 +19,7 @@ export type Props = {
   onSignOut: () => void;
 };
 
-const MobileHeaderPopup: React.FC<Props> = ({
-  onSignOut,
-}) => {
+const MobileHeaderPopup: React.FC<Props> = ({ onSignOut }) => {
 
   const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
   const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
@@ -46,7 +44,13 @@ const MobileHeaderPopup: React.FC<Props> = ({
       <div className={popupClassName}>
         <div className="popup-header-container">
           <header className="header__mobile">
-            <Link to="/main" onClick={closePopup} className="header__logo header__logo_type_mobile">NewsExplorer</Link>
+            <Link
+              to="/main"
+              onClick={closePopup}
+              className="header__logo header__logo_type_mobile"
+            >
+              NewsExplorer
+            </Link>
             <button
               className="header__close-button"
               onClick={closePopup}
@@ -58,11 +62,23 @@ const MobileHeaderPopup: React.FC<Props> = ({
             </button>
           </header>
           <nav className="header-navigation header-navigation_type_mobile">
-            <Link to="/main" onClick={closePopup} className="header-navigation__link header-navigation__link_type_mobile">Главная</Link>
+            <Link
+              to="/main"
+              onClick={closePopup}
+              className="header-navigation__link header-navigation__link_type_mobile"
+            >
+              Главная
+            </Link>
             {
               isLoggedIn
               &&
-              <Link to="/saved-news" onClick={closePopup} className="header-navigation__link header-navigation__link_type_mobile">Сохранённые статьи</Link>
+              <Link
+                to="/saved-news"
+                onClick={closePopup}
+                className="header-navigation__link header-navigation__link_type_mobile"
+              >
+                Сохранённые статьи
+              </Link>
             }
             <button
               className="header-navigation__button header-navigation__button_type_mobile"

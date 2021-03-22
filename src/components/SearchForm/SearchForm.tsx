@@ -4,7 +4,7 @@ import './SearchForm.scss';
 import { useDispatch } from 'react-redux';
 import {
   setArticlesActionCreator,
-  setArticlesToDisplayActionCreator,
+  setArticlesToDisplayActionCreator
 } from '../../store/actions/articlesActionCreators';
 import {
   setIsPreloaderShowActionCreator,
@@ -13,20 +13,20 @@ import {
   setIsNewsCardListShowActionCreator
 } from '../../store/actions/componentsVisibilityActionCreators';
 import * as newsApi from '../../utils/NewsApi';
-import { Article, NewsServerResponseAtLogin } from '../../utils/types';
+import {
+  Article,
+  NewsServerResponseAtLogin
+} from '../../utils/types';
 
 const SearchForm: React.FC = () => {
 
+  const dispatch = useDispatch();
   const [keyword, setKeyword] = React.useState<string>(''); // значение запроса
 
-  // отслеживаем изменение инпута формы поиска новостей
   const handleRequestValueChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     setKeyword(evt.target.value);
   };
 
-  const dispatch = useDispatch();
-
-  // поиск новостей (функция передается в обработчик onSubmit формы поиска)
   const handleSearchArticles = (evt: React.FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
     dispatch(setIsNewsCardListShowActionCreator(false));
@@ -83,9 +83,14 @@ const SearchForm: React.FC = () => {
         onChange={handleRequestValueChange}
         required
       />
-      <Button className="search__button" type="submit">Искать</Button>
+      <Button
+        className="search__button"
+        type="submit"
+      >
+        Искать
+      </Button>
     </form>
   );
-}
+};
 
 export default SearchForm;

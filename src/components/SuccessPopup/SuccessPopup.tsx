@@ -26,8 +26,15 @@ const SuccessPopup: React.FC = () => {
       isOpen={isSuccessPopupOpen}
       onClose={() => dispatch(setIsSuccessPopupOpenActionCreator(false))}
     >
-      <p className="popup__title">Пользователь успешно зарегистрирован!</p>
-      <span className="popup__link popup__link_type_success" onClick={switchToLoginPopup}>Войти</span>
+      <p className="popup__title">
+        Пользователь успешно зарегистрирован!
+      </p>
+      <span
+        className="popup__link popup__link_type_success"
+        onClick={switchToLoginPopup}
+      >
+        Войти
+      </span>
     </PopupWithForm>
   );
 }

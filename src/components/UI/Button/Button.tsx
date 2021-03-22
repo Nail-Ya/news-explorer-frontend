@@ -14,17 +14,14 @@ const Button: React.FC<Props> = ({
   children,
   type = 'button',
   className,
-}) => {
-
-  return (
-    <button
-      onClick={onClick}
-      className={classnames('button', className)}
-      type={type}
-    >
-      { children }
-    </button>
-  );
-};
+}) => (
+  <button
+    onClick={onClick}
+    className={classnames('button', className)}
+    type={type}
+  >
+    { children }
+  </button>
+);
 
 export default Button;

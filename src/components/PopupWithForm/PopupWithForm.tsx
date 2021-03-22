@@ -25,9 +25,16 @@ const PopupWithForm: React.FC<Props> = ({
   return (
     <Portal>
       <div className={popupClassName}>
-        <form className="popup__form" onSubmit={onSubmit}>
+        <form
+          className="popup__form"
+          onSubmit={onSubmit}
+        >
           {children}
-          <button onClick={onClose} className="popup__close-button" type="button">
+          <button
+            onClick={onClose}
+            className="popup__close-button"
+            type="button"
+          >
             <Icon
               className='popup__close-button-icon'
               name='close-icon'

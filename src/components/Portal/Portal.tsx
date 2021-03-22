@@ -11,6 +11,7 @@ const Portal: React.FC<PortalProps> = ({ children }) => {
   React.useEffect(() => {
     container.classList.add('portal');
     document.body.appendChild(container);
+
     return () => {
       document.body.removeChild(container);
     };

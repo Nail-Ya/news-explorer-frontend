@@ -111,14 +111,24 @@ const RegisterPopup: React.FC = () => {
         value={values.name || ''}
         errorText={errors.name!}
       />
-      <span id="form-input-error" className="popup__form_error_active">{errorFormText}</span>
-      <Button className={submitButtonClassName} type="submit">{isLoading ? 'Регистрация...' : 'Зарегистрироваться'}</Button>
+      <span className="popup__form_error_active">{errorFormText}</span>
+      <Button
+        className={submitButtonClassName}
+        type="submit"
+      >
+        {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+      </Button>
       <p className="popup__text">
         или&nbsp;
-        <span className="popup__link" onClick={switchToLoginPopup}>Войти</span>
+        <span
+          className="popup__link"
+          onClick={switchToLoginPopup}
+        >
+          Войти
+        </span>
       </p>
     </PopupWithForm>
   );
-}
+};
 
 export default RegisterPopup;

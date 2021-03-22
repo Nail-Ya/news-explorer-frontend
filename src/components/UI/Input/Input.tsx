@@ -38,6 +38,8 @@ export const Input: React.FC<Props> = ({
       onChange={onChange}
       value={value || ''}
     />
-    <span className="input_error_active">{errorText || ''}</span>
+    <span className="input_error_active">
+      {errorText || ''}
+    </span>
   </>
 );

@@ -1,5 +1,8 @@
 import React from 'react';
-import { Route, Redirect } from "react-router-dom";
+import {
+  Route,
+  Redirect
+} from "react-router-dom";
 import { setIsLoginPopupOpenActionCreator } from '../../store/actions/popupsActionCreators';
 import { useDispatch } from 'react-redux';
 

@@ -1,10 +1,16 @@
 import React from 'react';
 import './NewsCard.scss';
 import { useLocation } from 'react-router-dom';
-import { Article, SavedArticle } from '../../utils/types';
-import { setCorrectDate } from '../../utils/constants';
+import {
+  Article,
+  SavedArticle
+} from '../../utils/types';
+import { setCorrectDate } from '../../utils/helpers';
 import { RootState } from './../../store/reducers/rootReducer';
-import { useSelector, useDispatch } from 'react-redux';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 import classnames from 'classnames';
 import Icon from '../UI/Icon/Icon';
 import * as mainApi from '../../utils/MainApi';
@@ -49,30 +55,28 @@ const NewsCard: React.FC<Props> = ({
     'card__button-icon_type_delete': path === '/saved-news'
   });
 
-  const iconName: string =
-  `${
+  const iconName: string = `${
     path === '/main'
     ?
     isSavedArticle ? 'save-icon-marked' : 'save-icon'
     :
     'trash-icon'
-  }`
+  }`;
 
   const cardStickerClassName: string = classnames('card__sticker card__sticker_type_dropdown', {
     'card__sticker_hidden': isLoggedIn && path === '/main'
   });
 
-  const cardStickerText: string =
-  `${
+  const cardStickerText: string = `${
     path === '/main'
     ?
     'Войдите, чтобы сохранять статьи'
     :
     'Убрать из сохранённых'
-  }`
+  }`;
 
   // сохранить статью
-  function handleSaveArticle(article: Article): Promise<any> | void {
+  const handleSaveArticle = (article: Article): Promise<any> | void => {
     if (isLoggedIn) {
       return mainApi.saveArticle(article)
         .then((res) => {
@@ -87,7 +91,7 @@ const NewsCard: React.FC<Props> = ({
   };
 
   // удалить статью
-  function handleDeleteArticle(article: SavedArticle): Promise<any> {
+  const handleDeleteArticle = (article: SavedArticle): Promise<any> => {
     return mainApi.deleteArticle(article)
       .then((res) => {
         const mySavedArticlesArray: Array<SavedArticle> = mySavedArticles.filter((item: SavedArticle) => (item._id !== article._id));
@@ -99,7 +103,7 @@ const NewsCard: React.FC<Props> = ({
   };
 
   // колбек при нажатии кнопки на карточке
-  function handleArticleClick(article: any): void {
+  const handleArticleClick = (article: any): void => {
     if (!isLoggedIn) {
       dispatch(setIsLoginPopupOpenActionCreator(true));
     };
@@ -113,8 +117,15 @@ const NewsCard: React.FC<Props> = ({
 
   return (
     <li className="card">
-      <img className="card__image" src={cardsImageLink} alt={cardTitle} />
-      <button onClick={() => handleArticleClick(article)} className={'card__button'}>
+      <img
+        className="card__image"
+        src={cardsImageLink}
+        alt={cardTitle}
+      />
+      <button
+        onClick={() => handleArticleClick(article)}
+        className={'card__button'}
+      >
         <Icon
           className={iconClassName}
           name={iconName}
@@ -123,14 +134,23 @@ const NewsCard: React.FC<Props> = ({
       {
         path === '/saved-news'
         &&
-        <p className="card__sticker card__sticker_type_sticky">{cardSticker}</p>
+        <p className="card__sticker card__sticker_type_sticky">
+          {cardSticker}
+        </p>
       }
       <p className={cardStickerClassName}>{cardStickerText}</p>
       <div className="card__info">
         <p className="card__date">{setCorrectDate(cardDate)}</p>
         <p className="card__title">{cardTitle}</p>
         <p className="card__subtitle">{cardSubtitle}</p>
-        <a href={article.url} target="_blank" rel="noreferrer" className="card__source">{cardSource}</a>
+        <a
+          href={article.url}
+          target="_blank"
+          rel="noreferrer"
+          className="card__source"
+        >
+          {cardSource}
+        </a>
       </div>
     </li>
   );

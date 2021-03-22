@@ -1,4 +1,5 @@
-import { newsApiUrl, newsApiKey, getPresentDay, getSevenDaysAgoDay } from './constants';
+import { newsApiUrl, newsApiKey } from './constants';
+import { getPresentDay, getSevenDaysAgoDay } from './helpers';
 
 export const getNews = (request: string): Promise<any> => {
   const url: string = `${newsApiUrl}?` +

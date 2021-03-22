@@ -22,18 +22,17 @@ const Header: React.FC<Props> = ({ onSignOut }) => {
   const headerClassName: string = classnames('header', {
     'header_theme_white': path === '/saved-news'
   });
-
   const headerLogoClassName: string = classnames('header__logo', {
     'header__logo_theme_white': path === '/saved-news'
   });
 
-  const iconName: string =
-  `${path === '/main'
+  const iconName: string = `${
+    path === '/main'
     ?
     'burger-icon-white'
     :
     'burger-icon-black'
-  }`
+  }`;
 
   const openMobilePopup = (): void => {
     dispatch(setIsMobileHeaderPopupOpenActionCreator(true));
@@ -42,7 +41,12 @@ const Header: React.FC<Props> = ({ onSignOut }) => {
   return (
     <header className={headerClassName}>
       <div className="header__container">
-        <Link to="/main" className={headerLogoClassName}>NewsExplorer</Link>
+        <Link
+          to="/main"
+          className={headerLogoClassName}
+        >
+          NewsExplorer
+        </Link>
         <Navigation onSignOut={onSignOut} />
         <button
           onClick={openMobilePopup}
