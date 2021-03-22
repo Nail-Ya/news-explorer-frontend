@@ -1,23 +1,23 @@
 import React from 'react';
 import './Header.scss';
 import Navigation from '../Navigation/Navigation';
-import { Link, useLocation } from 'react-router-dom';
+import {
+  Link,
+  useLocation
+} from 'react-router-dom';
 import classnames from 'classnames';
 import Icon from '../UI/Icon/Icon';
+import { useDispatch } from 'react-redux';
+import { setIsMobileHeaderPopupOpenActionCreator } from '../../store/actions/popupsActionCreators';
 
 export type Props = {
-  onLogin: () => void;
-  onMobileHeader: () => void;
   onSignOut: () => void;
 };
 
-const Header: React.FC<Props> = ({
-  onLogin,
-  onMobileHeader,
-  onSignOut
-}) => {
+const Header: React.FC<Props> = ({ onSignOut }) => {
 
   const path: string = useLocation().pathname;
+  const dispatch = useDispatch();
 
   const headerClassName: string = classnames('header', {
     'header_theme_white': path === '/saved-news'
@@ -28,23 +28,24 @@ const Header: React.FC<Props> = ({
   });
 
   const iconName: string =
-    `${path === '/main'
-      ?
-      'burger-icon-white'
-      :
-      'burger-icon-black'
-    }`
+  `${path === '/main'
+    ?
+    'burger-icon-white'
+    :
+    'burger-icon-black'
+  }`
+
+  const openMobilePopup = (): void => {
+    dispatch(setIsMobileHeaderPopupOpenActionCreator(true));
+  }
 
   return (
     <header className={headerClassName}>
       <div className="header__container">
         <Link to="/main" className={headerLogoClassName}>NewsExplorer</Link>
-        <Navigation
-          onLogin={onLogin}
-          onSignOut={onSignOut}
-        />
+        <Navigation onSignOut={onSignOut} />
         <button
-          onClick={onMobileHeader}
+          onClick={openMobilePopup}
           className='header__burger-menu-button'
         >
           <Icon

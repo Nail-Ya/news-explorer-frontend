@@ -1,25 +1,32 @@
 import React from 'react';
 import './Navigation.scss';
-import { NavLink, useLocation } from 'react-router-dom';
-import { User } from './../../utils/interfaces';
+import {
+  NavLink,
+  useLocation
+} from 'react-router-dom';
+import { User } from '../../utils/types';
 import { RootState } from './../../store/reducers/rootReducer';
-import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 import Icon from '../UI/Icon/Icon';
+import { setIsLoginPopupOpenActionCreator } from '../../store/actions/popupsActionCreators';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 
 export type Props = {
-  onLogin: () => void;
   onSignOut: () => void;
 };
 
 const Navigation: React.FC<Props> = ({
-  onLogin,
   onSignOut,
 }) => {
 
   const path: string = useLocation().pathname;
   const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
   const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
+
+  const dispatch = useDispatch();
 
   const headerNavigationLinkClassName: string = classnames('header-navigation__link', {
     'header-navigation__link_theme_white': path === '/saved-news'
@@ -43,6 +50,10 @@ const Navigation: React.FC<Props> = ({
     'signout-icon-black'
   }`
 
+  const handleOpenLogin = (): void => {
+    dispatch(setIsLoginPopupOpenActionCreator(true));
+  };
+
   return (
     <nav className="header-navigation">
       <NavLink to="/main" className={headerNavigationLinkClassName} activeClassName={headerNavigationActiveLinkClassName}>Главная</NavLink>
@@ -52,7 +63,7 @@ const Navigation: React.FC<Props> = ({
         <NavLink to="/saved-news" className={headerNavigationLinkClassName} activeClassName={headerNavigationActiveLinkClassName}>Сохранённые статьи</NavLink>
       }
       <button
-        onClick={isLoggedIn ? onSignOut : onLogin}
+        onClick={isLoggedIn ? onSignOut : handleOpenLogin}
         className={headerNavigationButtonClassName}
       >
         {

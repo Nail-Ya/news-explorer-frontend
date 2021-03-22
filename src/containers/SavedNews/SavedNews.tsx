@@ -2,17 +2,15 @@ import React from 'react';
 import './SavedNews.scss';
 import SavedNewsHeader from '../../components/SavedNewsHeader/SavedNewsHeader';
 import NewsCard from '../../components/NewsCard/NewsCard';
-import { Article, SavedArticle } from '../../utils/interfaces';
+import { SavedArticle } from '../../utils/types';
 import { RootState } from '../../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 
 export type Props = {
-  onArticleClick: (article: Article | SavedArticle) => void;
+  getSavedArticles: () => Promise<any>;
 };
 
-const SavedNews: React.FC<Props> = ({
-  onArticleClick,
-}) => {
+const SavedNews: React.FC<Props> = ({ getSavedArticles }) => {
 
   const mySavedArticles: Array<SavedArticle> = useSelector((state: RootState) => state.articles.mySavedArticles);
 
@@ -36,7 +34,7 @@ const SavedNews: React.FC<Props> = ({
                     cardSubtitle={article.text}
                     cardSource={article.source.name || article.source}
                     cardSticker={article.keyword}
-                    onArticleClick={onArticleClick}
+                    getSavedArticles={getSavedArticles}
                   />
                 )
               }

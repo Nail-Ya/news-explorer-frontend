@@ -1,6 +1,6 @@
 import {
   componentsVisibilityAction,
-} from '../../utils/interfaces';
+} from '../../utils/types';
 import {
   SET_IS_PRELOADER_SHOW,
   SET_IS_NOT_FOUND_SHOW,

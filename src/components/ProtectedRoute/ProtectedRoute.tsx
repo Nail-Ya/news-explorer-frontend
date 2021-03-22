@@ -1,33 +1,32 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
-import { SavedArticle } from '../../utils/interfaces';
+import { setIsLoginPopupOpenActionCreator } from '../../store/actions/popupsActionCreators';
+import { useDispatch } from 'react-redux';
 
 export type Props = {
   component: any;
-  handleLoginClick: () => void;
-  path: string;
-  onArticleClick: (article: SavedArticle) => void;
+  getSavedArticles: () => Promise<any>;
 };
 
 const ProtectedRoute: React.FC<Props> = ({
   component: Component,
-  handleLoginClick,
-  path,
-  onArticleClick,
+  getSavedArticles
 }) => {
 
+  const dispatch = useDispatch();
   const isLoggedIn: boolean = JSON.parse(localStorage.getItem('loggedIn') || 'false');
+
   // открытие попапа авторизации
   React.useEffect(() => {
     if (!isLoggedIn) {
-      handleLoginClick();
+      dispatch(setIsLoginPopupOpenActionCreator(true));
     }
-  }, [isLoggedIn, handleLoginClick]);
+  }, [dispatch, isLoggedIn]);
 
   return (
     <Route>
       {
-        () => isLoggedIn ? <Component handleLoginClick={handleLoginClick} path={path} onArticleClick={onArticleClick} /> : <Redirect to="/main" />
+        () => isLoggedIn ? <Component getSavedArticles={getSavedArticles} /> : <Redirect to="/main" />
       }
     </Route>
   );

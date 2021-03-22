@@ -13,7 +13,7 @@ import {
   setIsNewsCardListShowActionCreator
 } from '../../store/actions/componentsVisibilityActionCreators';
 import * as newsApi from '../../utils/NewsApi';
-import { Article, NewsServerResponseAtLogin } from '../../utils/interfaces';
+import { Article, NewsServerResponseAtLogin } from '../../utils/types';
 
 const SearchForm: React.FC = () => {
 

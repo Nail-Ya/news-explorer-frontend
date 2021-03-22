@@ -1,26 +1,33 @@
 import React from 'react';
 import './SuccessPopup.scss';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
+import { RootState } from '../../store/reducers/rootReducer';
+import {
+  setIsLoginPopupOpenActionCreator,
+  setIsSuccessPopupOpenActionCreator
+} from '../../store/actions/popupsActionCreators';
 
-export type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  onLogin: () => void;
-};
+const SuccessPopup: React.FC = () => {
 
-const SuccessPopup: React.FC<Props> = ({
-  isOpen,
-  onClose,
-  onLogin,
-}) => {
+  const dispatch = useDispatch();
+  const isSuccessPopupOpen: boolean = useSelector((state: RootState) => state.popups.isSuccessPopupOpen);
+
+  const switchToLoginPopup = (): void => {
+    dispatch(setIsSuccessPopupOpenActionCreator(false));
+    dispatch(setIsLoginPopupOpenActionCreator(true));
+  };
 
   return (
     <PopupWithForm
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={isSuccessPopupOpen}
+      onClose={() => dispatch(setIsSuccessPopupOpenActionCreator(false))}
     >
       <p className="popup__title">Пользователь успешно зарегистрирован!</p>
-      <span className="popup__link popup__link_type_success" onClick={onLogin}>Войти</span>
+      <span className="popup__link popup__link_type_success" onClick={switchToLoginPopup}>Войти</span>
     </PopupWithForm>
   );
 }

@@ -1,5 +1,5 @@
 import {BASE_URL} from './constants';
-import { ErrorResponse, Article, SavedArticle } from './interfaces';
+import { ErrorResponse, Article, SavedArticle } from './types';
 
 // отправка запроса на регистрацию
 export const register = (email: string, password: string, name: string): Promise<any> => {

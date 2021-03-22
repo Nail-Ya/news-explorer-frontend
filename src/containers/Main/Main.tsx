@@ -5,17 +5,14 @@ import NewsCardList from '../../components/NewsCardList/NewsCardList';
 import About from '../../components/About/About';
 import Preloader from '../../components/UI/Preloader/Preloader';
 import NotFound from '../../components/NotFound/NotFound';
-import { Article } from '../../utils/interfaces';
 import { useSelector } from 'react-redux';
 import { RootState } from './../../store/reducers/rootReducer';
 
 export type Props = {
-  onArticleClick: (article: Article) => void;
+  getSavedArticles: () => Promise<any>;
 };
 
-const Main: React.FC<Props> = ({
-  onArticleClick,
-}) => {
+const Main: React.FC<Props> = ({ getSavedArticles }) => {
 
   const isPreloaderShow: boolean = useSelector((state: RootState) => state.componentsVisibility.isPreloaderShow);
   const isNotFoundShow: boolean = useSelector((state: RootState) => state.componentsVisibility.isNotFoundShow);
@@ -37,9 +34,7 @@ const Main: React.FC<Props> = ({
       {
         isNewsCardListShow
         &&
-        <NewsCardList
-          onArticleClick={onArticleClick}
-        />
+        <NewsCardList getSavedArticles={getSavedArticles} />
       }
       <About />
     </main>

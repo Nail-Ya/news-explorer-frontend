@@ -1,22 +1,19 @@
 import React from 'react';
 import './NewsCardList.scss';
 import NewsCard from '../NewsCard/NewsCard';
-import { Article } from '../../utils/interfaces';
+import { Article } from '../../utils/types';
 import { RootState } from './../../store/reducers/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { setArticlesToDisplayActionCreator } from '../../store/actions/articlesActionCreators';
 
 export type Props = {
-  onArticleClick: (article: Article) => void;
+  getSavedArticles: () => Promise<any>;
 };
 
-const NewsCardList: React.FC<Props> = ({
-  onArticleClick,
-}) => {
+const NewsCardList: React.FC<Props> = ({ getSavedArticles }) => {
 
   const articlesToDisplay: Array<Article> = useSelector((state: RootState) => state.articles.articlesToDisplay);
   const articles: Array<Article> = useSelector((state: RootState) => state.articles.articles);
-
   const dispatch = useDispatch();
 
   // добавляем 3 статьи к показу по кнопке показать еще
@@ -42,7 +39,7 @@ const NewsCardList: React.FC<Props> = ({
                 cardTitle={article.title}
                 cardSubtitle={article.description}
                 cardSource={article.source.name}
-                onArticleClick={onArticleClick}
+                getSavedArticles={getSavedArticles}
               />
             )
           }

@@ -111,3 +111,18 @@ export type componentsVisibilityAction = {
   isErrorNewsServer?: boolean;
   isNewsCardListShow?: boolean;
 };
+
+export type popupsState = {
+  isLoginPopupOpen: boolean;
+  isRegisterPopupOpen: boolean;
+  isMobileHeaderPopupOpen: boolean;
+  isSuccessPopupOpen: boolean;
+};
+
+export type popupsAction = {
+  type: string;
+  isLoginPopupOpen?: boolean;
+  isRegisterPopupOpen?: boolean;
+  isMobileHeaderPopupOpen?: boolean;
+  isSuccessPopupOpen?: boolean;
+};
