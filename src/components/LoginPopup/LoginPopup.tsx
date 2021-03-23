@@ -1,84 +1,139 @@
 import React from 'react';
-import './LoginPopup.css';
+import './LoginPopup.scss';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
-import { InputValues, ErrorValues } from './../../utils/interfaces';
+import {
+  ServerResponseAtLogin,
+  ServerResponseAtRequestingUserInfo,
+} from '../../utils/types';
 import classnames from 'classnames';
+import Button from './../UI/Button/Button';
+import { Input } from '../UI/Input/Input';
+import * as mainApi from '../../utils/MainApi';
+import {
+  setCurrentUserActionCreator,
+  setIsLoggedInActionCreator
+} from '../../store/actions/userActionCreators';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import FormValidator from '../../hooks/FormValidator';
+import { RootState } from '../../store/reducers/rootReducer';
+import {
+  setIsLoginPopupOpenActionCreator,
+  setIsRegisterPopupOpenActionCreator
+} from '../../store/actions/popupsActionCreators';
 
-export type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  onChangePopup: () => void;
-  onLogin: (email: string, password: string) => void;
-  isValid: boolean;
-  handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-  isLoading: boolean;
-  values: InputValues;
-  error: ErrorValues;
-  errorFormText: string;
-};
+const LoginPopup: React.FC = () => {
 
-const LoginPopup: React.FC<Props> = ({
-  isOpen,
-  onClose,
-  onChangePopup,
-  onLogin,
-  isValid,
-  handleChange,
-  isLoading,
-  values,
-  error,
-  errorFormText,
-}) => {
+  const isLoginPopupOpen: boolean = useSelector((state: RootState) => state.popups.isLoginPopupOpen);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [errorFormText, setErrorFormText] = React.useState<string>('');
+  const {
+    values,
+    handleChange,
+    errors,
+    isValid,
+    resetForm
+  } = FormValidator();
 
-  function handleSubmit(evt: React.FormEvent<HTMLFormElement>): void {
-    evt.preventDefault();
-    onLogin(values.emailLogin!, values.passwordLogin!);
-  }
+  React.useEffect(() => {
+    resetForm();
+    setErrorFormText('');
+  }, [isLoginPopupOpen, resetForm]);
 
   const submitButtonClassName: string = classnames('popup__button', {
     'popup__button_disabled': !isValid
   });
 
+  // Логин пользователя
+  const handleLogin = (email: string, password: string): Promise<any> => {
+    setIsLoading(true);
+    return mainApi.authorize(email, password)
+      .then((data: ServerResponseAtLogin) => {
+        if (!data) {
+          throw new Error('Что-то пошло не так!');
+        }
+        dispatch(setIsLoginPopupOpenActionCreator(false));
+
+        mainApi.getUserInfo(data.token)
+          .then((res: ServerResponseAtRequestingUserInfo) => {
+            localStorage.setItem('user', JSON.stringify(res.data));
+            dispatch(setCurrentUserActionCreator(res.data));
+            dispatch(setIsLoggedInActionCreator(true));
+            history.push('/main');
+          })
+          .catch((err) => console.log(`Ошибка при получении данных пользователя после входа в систему: ${err}`));
+      })
+      .catch((err) => {
+        console.log(`Ошибка при входе пользователя в систему: ${err}`)
+        setErrorFormText(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
+    evt.preventDefault();
+    handleLogin(values.emailLogin!, values.passwordLogin!);
+  }
+
+  // Функция для перехода по ссылке в попап регистрации
+  const switchToRegisterPopup = (): void => {
+    dispatch(setIsLoginPopupOpenActionCreator(false));
+    dispatch(setIsRegisterPopupOpenActionCreator(true));
+  };
+
   return (
     <PopupWithForm
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={isLoginPopupOpen}
+      onClose={() => dispatch(setIsLoginPopupOpenActionCreator(false))}
       onSubmit={handleSubmit}
     >
       <p className="popup__title">Вход</p>
       <span className="popup__input-text">Email</span>
-      <input
-        id="email-input"
+      <Input
         type="email"
         name="emailLogin"
-        className="popup__input"
         placeholder="Введите почту"
-        required
+        required={true}
         minLength={5}
         maxLength={30}
         onChange={handleChange}
         value={values.emailLogin || ''}
+        errorText={errors.emailLogin!}
       />
-      <span id="email-input-error" className="popup__input_error_active">{error.emailLogin || ''}</span>
       <span className="popup__input-text">Пароль</span>
-      <input
-        id="password-input"
+      <Input
         type="password"
         name="passwordLogin"
-        className="popup__input"
         placeholder="Введите пароль"
-        required
-        minLength={5}
+        required={true}
+        minLength={10}
         maxLength={30}
         onChange={handleChange}
         value={values.passwordLogin || ''}
+        errorText={errors.passwordLogin!}
       />
-      <span id="password-input-error" className="popup__input_error_active">{error.passwordLogin || ''}</span>
-      <span id="form-input-error" className="popup__form_error_active">{errorFormText}</span>
-      <button className={submitButtonClassName} type="submit">{isLoading ? 'Загрузка...' : 'Войти'}</button>
+      <span className="popup__form_error_active">{errorFormText}</span>
+      <Button
+        className={submitButtonClassName}
+        type='submit'
+      >
+        {isLoading ? 'Загрузка...' : 'Войти'}
+      </Button>
       <p className="popup__text">
         или&nbsp;
-        <span className="popup__link" onClick={onChangePopup}>Зарегистрироваться</span>
+        <span
+          className="popup__link"
+          onClick={switchToRegisterPopup}
+        >
+          Зарегистрироваться
+        </span>
       </p>
     </PopupWithForm>
   );

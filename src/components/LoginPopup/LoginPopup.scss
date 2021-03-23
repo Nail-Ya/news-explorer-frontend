@@ -1,0 +1,86 @@
+.popup {
+  &__title {
+    font-family: 'Roboto-black', 'Arial', 'Callibri', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 28px;
+    color: #1A1B22;
+    margin: 0 0 0 36px;
+
+    @media screen and (max-width: 479px) {
+      margin: 0 0 0 16px;
+    }
+  }
+
+  &__input-text {
+    font-family: 'Roboto-regular', 'Arial', 'Callibri', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #2F71E5;
+    display: block;
+    margin: 10px 0 0 36px;
+
+    @media screen and (max-width: 479px) {
+      margin: 10px 0 0 16px;
+    }
+
+    &:nth-of-type(1) {
+      margin: 22px 0 0 36px;
+
+      @media screen and (max-width: 479px) {
+        margin: 22px 0 0 16px;
+      }
+    }
+  }
+
+  &__form_error_active {
+    font-family: 'Roboto-regular', 'Arial', 'Callibri', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ff0000;
+    display: block;
+    margin: 17px auto 0;
+    width: 90%;
+    text-align: center;
+  }
+
+  &__button {
+    width: 358px;
+    height: 64px;
+    display: block;
+    margin: 39px auto 0 auto;
+
+    &_disabled {
+      color: #B6BCBF;
+      background: #E6E8EB;
+      pointer-events: none;
+      transition: none;
+    }
+
+    @media screen and (max-width: 479px) {
+      width: calc(100% - 32px);
+      margin: 41px auto 0 auto;
+    }
+  }
+
+  &__text {
+    font-family: 'Inter-regular', 'Arial', 'Callibri', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #000000;
+    margin: 16px auto 0 auto;
+  }
+
+  &__link {
+    color: #2F71E5;
+    cursor: pointer;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+}

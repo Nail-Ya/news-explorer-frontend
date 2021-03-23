@@ -1,7 +1,7 @@
 import {
   ArticleState,
   ArticleAction,
-} from '../../utils/interfaces';
+} from '../../utils/types';
 import {
   SET_ARTICLES,
   SET_ARTICLES_TO_DISPLAY,

@@ -1,0 +1,111 @@
+.footer {
+  &-container {
+    max-width: 1232px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (max-width: 1439px) {
+      width: calc(100% - 80px);
+      height: 64px;
+    }
+
+    @media screen and (max-width: 767px) {
+      width: calc(100% - 32px);
+      height: 176px;
+      flex-direction: column-reverse;
+    }
+  }
+
+  &__text {
+    font-family: 'Roboto-regular', 'Arial', 'Callibri', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #B6BCBF;
+    margin: 32px 0 26px 0;
+
+    @media screen and (max-width: 1439px) {
+      margin: 24px 0 18px 0;
+    }
+
+    @media screen and (max-width: 767px) {
+      margin: 30px 0 22px 0;
+    }
+  }
+
+  &__social {
+    display: flex;
+
+    @media screen and (max-width: 767px) {
+      justify-content: space-between;
+    }
+  }
+
+  &__links {
+    list-style: none;
+    display: flex;
+    margin: 30px 42px 28px 0;
+    padding: 0;
+
+    @media screen and (max-width: 1439px) {
+      margin: 21px 24px 21px 0;
+    }
+
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      margin: 20px 54px 0 0;
+    }
+  }
+
+  &__link-item:nth-of-type(1) {
+    margin: 0 30px 0 0;
+
+    @media screen and (max-width: 767px) {
+      margin: 0;
+    }
+  }
+
+  &__link {
+    font-family: 'Roboto-regular', 'Arial', 'Callibri', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #1A1B22;
+    text-decoration: none;
+
+    &:hover {
+      opacity: .7;
+    }
+
+    @media screen and (max-width: 767px) {
+      line-height: 48px;
+    }
+  }
+
+  &__social-icons {
+    list-style: none;
+    display: flex;
+    margin: 30px 0;
+    padding: 0;
+
+    @media screen and (max-width: 1439px) {
+      margin: 20px 0;
+    }
+  }
+
+  &__social-icon {
+    width: 20px;
+    height: 20px;
+
+    &:hover {
+      opacity: .7;
+    }
+
+    &-item:nth-of-type(1) {
+      margin: 0 28px 0 0;
+    }
+  }
+}

@@ -1,25 +1,29 @@
 import React from 'react';
-import './Navigation.css';
-import { NavLink, useLocation } from 'react-router-dom';
-import { User } from './../../utils/interfaces';
+import './Navigation.scss';
+import {
+  NavLink,
+  useLocation
+} from 'react-router-dom';
+import { User } from '../../utils/types';
 import { RootState } from './../../store/reducers/rootReducer';
-import { useSelector } from 'react-redux';
 import classnames from 'classnames';
-import Icon from '../Icon/Icon';
+import Icon from '../UI/Icon/Icon';
+import { setIsLoginPopupOpenActionCreator } from '../../store/actions/popupsActionCreators';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 
 export type Props = {
-  onLogin: () => void;
   onSignOut: () => void;
 };
 
-const Navigation: React.FC<Props> = ({
-  onLogin,
-  onSignOut,
-}) => {
+const Navigation: React.FC<Props> = ({ onSignOut }) => {
 
   const path: string = useLocation().pathname;
   const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
   const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
+  const dispatch = useDispatch();
 
   const headerNavigationLinkClassName: string = classnames('header-navigation__link', {
     'header-navigation__link_theme_white': path === '/saved-news'
@@ -34,37 +38,55 @@ const Navigation: React.FC<Props> = ({
     'header-navigation__button_theme_white': path === '/saved-news'
   });
 
-  const headerNavigationButtonIconName: string =
-  `${
+  const headerNavigationButtonIconName: string = `${
     path === '/main'
     ?
     'signout-icon-white'
     :
     'signout-icon-black'
-  }`
+  }`;
+
+  const handleOpenLogin = (): void => {
+    dispatch(setIsLoginPopupOpenActionCreator(true));
+  };
 
   return (
     <nav className="header-navigation">
-      <NavLink to="/main" className={headerNavigationLinkClassName} activeClassName={headerNavigationActiveLinkClassName}>Главная</NavLink>
+      <NavLink
+        to="/main"
+        className={headerNavigationLinkClassName}
+        activeClassName={headerNavigationActiveLinkClassName}
+      >
+        Главная
+      </NavLink>
       {
         isLoggedIn
         &&
-        <NavLink to="/saved-news" className={headerNavigationLinkClassName} activeClassName={headerNavigationActiveLinkClassName}>Сохранённые статьи</NavLink>
+        <NavLink
+          to="/saved-news"
+          className={headerNavigationLinkClassName}
+          activeClassName={headerNavigationActiveLinkClassName}
+        >
+          Сохранённые статьи
+        </NavLink>
       }
-      <button onClick={isLoggedIn ? onSignOut : onLogin} className={headerNavigationButtonClassName}>
-      {
-        isLoggedIn
-        ?
-        <>
-          {currentUser.name}
-          <Icon
-            className='header-navigation__button-icon'
-            name={headerNavigationButtonIconName}
-          />
-        </>
-        :
-        'Авторизоваться'
-      }
+      <button
+        onClick={isLoggedIn ? onSignOut : handleOpenLogin}
+        className={headerNavigationButtonClassName}
+      >
+        {
+          isLoggedIn
+          ?
+          <>
+            {currentUser.name}
+            <Icon
+              className='header-navigation__button-icon'
+              name={headerNavigationButtonIconName}
+            />
+          </>
+          :
+          'Авторизоваться'
+        }
       </button>
     </nav>
   );

@@ -1,5 +1,9 @@
-import {BASE_URL} from './constants';
-import { ErrorResponse, Article, SavedArticle } from './interfaces';
+import { BASE_URL } from './constants';
+import {
+  ErrorResponse,
+  Article,
+  SavedArticle
+} from './types';
 
 // отправка запроса на регистрацию
 export const register = (email: string, password: string, name: string): Promise<any> => {
@@ -76,7 +80,7 @@ export const getSavedArticles = (): Promise<any> => {
 
 // запрос на сохранение статьи в базу данных
 export const saveArticle = (article: Article): Promise<any> => {
-  const { keyword, title, description, publishedAt, source, url, urlToImage } = article;
+  const { owner, keyword, title, description, publishedAt, source, url, urlToImage } = article;
   return fetch(`${BASE_URL}/articles`, {
     method: 'POST',
     headers: {
@@ -84,6 +88,7 @@ export const saveArticle = (article: Article): Promise<any> => {
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
     },
     body: JSON.stringify({
+      owner,
       keyword,
       title,
       text: description,

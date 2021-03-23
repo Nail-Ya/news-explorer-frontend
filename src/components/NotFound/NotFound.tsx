@@ -1,31 +1,29 @@
 import React from 'react';
-import './NotFound.css';
-import Icon from '../Icon/Icon';
+import './NotFound.scss';
+import Icon from '../UI/Icon/Icon';
+import { useSelector } from 'react-redux';
+import { RootState } from './../../store/reducers/rootReducer';
 
-export type Props = {
-  errorNewsServer: boolean;
-};
+const NotFound: React.FC = () => {
 
-const NotFound: React.FC<Props> = ({
-  errorNewsServer
-}) => {
+  const isErrorNewsServer: boolean = useSelector((state: RootState) => state.componentsVisibility.isErrorNewsServer);
 
   // если возникла ошибка на сервере NewsApi, меняем текст ошибки
   const titleText: string = `${
-    errorNewsServer
+    isErrorNewsServer
     ?
     'Во время запроса произошла ошибка'
     :
     'Ничего не найдено'
-  }`
+  }`;
 
   const subtitleText: string = `${
-    errorNewsServer
+    isErrorNewsServer
     ?
     'Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'
     :
     'К сожалению по вашему запросу ничего не найдено.'
-  }`
+  }`;
 
   return (
     <section className="not-found">

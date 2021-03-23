@@ -1,7 +1,7 @@
 import {
   User,
   UserAction,
-} from '../../utils/interfaces';
+} from '../../utils/types';
 import {
   SET_CURRENT_USER,
   SET_IS_LOGGED_IN,
