@@ -16,7 +16,10 @@ import {
 } from 'react-router-dom';
 import * as mainApi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { ServerResponseWhenRequestingSavedArticles } from '../../utils/types';
+import {
+  SavedArticle,
+  User
+} from '../../utils/types';
 import { RootState } from './../../store/reducers/rootReducer';
 import {
   useSelector,
@@ -36,15 +39,17 @@ import { setIsMobileHeaderPopupOpenActionCreator } from '../../store/actions/pop
 
 const App: React.FC = () => {
   const isLoggedIn: boolean = useSelector((state: RootState) => state.user.isLoggedIn);
+  const currentUser: User = useSelector((state: RootState) => state.user.currentUser);
   const dispatch = useDispatch();
   const history = useHistory();
 
   // запрос сохраненных карточек
   const getSavedArticles = (): Promise<any> => {
     return mainApi.getSavedArticles()
-      .then((res: ServerResponseWhenRequestingSavedArticles) => {
-        if (res) {
-          dispatch(setMySavedArticlesActionCreator(res.data));
+      .then((articles: Array<SavedArticle>) => {
+        if (articles) {
+          const savedArticles: Array<SavedArticle> = articles.filter((item: SavedArticle) => item.owner === currentUser._id);
+          dispatch(setMySavedArticlesActionCreator(savedArticles));
         } else {
           dispatch(setMySavedArticlesActionCreator([]));
         }

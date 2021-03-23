@@ -3,7 +3,7 @@ import './LoginPopup.scss';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
 import {
   ServerResponseAtLogin,
-  User
+  ServerResponseAtRequestingUserInfo,
 } from '../../utils/types';
 import classnames from 'classnames';
 import Button from './../UI/Button/Button';
@@ -60,9 +60,9 @@ const LoginPopup: React.FC = () => {
         dispatch(setIsLoginPopupOpenActionCreator(false));
 
         mainApi.getUserInfo(data.token)
-          .then((res: User) => {
-            localStorage.setItem('user', JSON.stringify(res));
-            dispatch(setCurrentUserActionCreator(res));
+          .then((res: ServerResponseAtRequestingUserInfo) => {
+            localStorage.setItem('user', JSON.stringify(res.data));
+            dispatch(setCurrentUserActionCreator(res.data));
             dispatch(setIsLoggedInActionCreator(true));
             history.push('/main');
           })
@@ -113,7 +113,7 @@ const LoginPopup: React.FC = () => {
         name="passwordLogin"
         placeholder="Введите пароль"
         required={true}
-        minLength={5}
+        minLength={10}
         maxLength={30}
         onChange={handleChange}
         value={values.passwordLogin || ''}

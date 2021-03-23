@@ -93,7 +93,7 @@ const RegisterPopup: React.FC = () => {
         name="password"
         placeholder="Введите пароль"
         required={true}
-        minLength={5}
+        minLength={10}
         maxLength={20}
         onChange={handleChange}
         value={values.password || ''}

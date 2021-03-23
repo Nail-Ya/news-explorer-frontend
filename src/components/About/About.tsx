@@ -1,6 +1,6 @@
 import React from 'react';
 import './About.scss';
-import avatar from './../../images/avatar.jpg';
+import avatar from '../../images/avatar.jpg';
 
 const About: React.FC = () => (
   <section className="about">

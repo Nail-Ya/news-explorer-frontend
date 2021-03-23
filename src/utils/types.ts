@@ -9,6 +9,7 @@ export interface Source {
 };
 
 export interface Article {
+  owner?: string;
   author: string;
   content: string;
   keyword: string;
@@ -31,11 +32,14 @@ export interface SavedArticle {
   title: string;
   __v: number;
   _id: string;
+  owner?: string;
 };
 
 export interface User {
   email?: string;
   name?: string;
+  __v?: number;
+  _id?: string;
 };
 
 export interface InputValues {
@@ -62,14 +66,14 @@ export interface ServerResponseAtLogin {
   token: string;
 };
 
+export interface ServerResponseAtRequestingUserInfo {
+  data: User;
+};
+
 export interface NewsServerResponseAtLogin {
   articles?: Array<Article>;
   status: string;
   totalResults?: number;
-};
-
-export interface ServerResponseWhenRequestingSavedArticles {
-  data: Array<SavedArticle>;
 };
 
 // redux
