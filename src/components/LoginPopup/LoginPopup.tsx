@@ -3,7 +3,7 @@ import './LoginPopup.scss';
 import PopupWithForm from './../PopupWithForm/PopupWithForm';
 import {
   ServerResponseAtLogin,
-  ServerResponseAtRequestingUserInfo,
+  User
 } from '../../utils/types';
 import classnames from 'classnames';
 import Button from './../UI/Button/Button';
@@ -26,7 +26,6 @@ import {
 } from '../../store/actions/popupsActionCreators';
 
 const LoginPopup: React.FC = () => {
-
   const isLoginPopupOpen: boolean = useSelector((state: RootState) => state.popups.isLoginPopupOpen);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -60,9 +59,9 @@ const LoginPopup: React.FC = () => {
         dispatch(setIsLoginPopupOpenActionCreator(false));
 
         mainApi.getUserInfo(data.token)
-          .then((res: ServerResponseAtRequestingUserInfo) => {
-            localStorage.setItem('user', JSON.stringify(res.data));
-            dispatch(setCurrentUserActionCreator(res.data));
+          .then((res: User) => {
+            localStorage.setItem('user', JSON.stringify(res));
+            dispatch(setCurrentUserActionCreator(res));
             dispatch(setIsLoggedInActionCreator(true));
             history.push('/main');
           })
